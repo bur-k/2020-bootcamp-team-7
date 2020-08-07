@@ -10,6 +10,9 @@ public class Cast {
     @JsonProperty("profile_path")
     public String profilePath;
 
+    public Cast() {
+    }
+
     public Cast(String character, Integer tmdbPersonId, String name, String profilePath) {
         this.character = character;
         this.tmdbPersonId = tmdbPersonId;

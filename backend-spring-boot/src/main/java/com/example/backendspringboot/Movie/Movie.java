@@ -23,6 +23,9 @@ public class Movie {
     public Integer tmdbMovieId;
     public String title;
 
+    public Movie() {
+    }
+
     public Movie(String backdropPath, Credits credits, JSONArray genres, String imdbId, String overview, String posterPath, String releaseDate, Integer runtime, String tagline, Integer tmdbMovieId, String title) {
         this.backdropPath = backdropPath;
         this.credits = credits;

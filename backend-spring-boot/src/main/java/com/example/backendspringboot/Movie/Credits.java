@@ -6,6 +6,13 @@ public class Credits {
     List<Cast> cast;
     List<Crew> crew;
 
+    public Credits() {
+    }
+
+    public Credits(List<Cast> cast, List<Crew> crew) {
+        this.cast = cast;
+        this.crew = crew;
+    }
     public List<Cast> getCast() {
         return cast;
     }
@@ -19,11 +26,6 @@ public class Credits {
     }
 
     public void setCrew(List<Crew> crew) {
-        this.crew = crew;
-    }
-
-    public Credits(List<Cast> cast, List<Crew> crew) {
-        this.cast = cast;
         this.crew = crew;
     }
 }

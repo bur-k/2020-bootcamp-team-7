@@ -2,6 +2,7 @@ package com.example.backendspringboot.Movie;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -14,7 +15,18 @@ public class MovieController {
 
     @GetMapping(value = "/{tmdbMovieId}", produces = "application/json")
     public Movie getMovie(@PathVariable Integer tmdbMovieId) {
-        return movieService.findByTmdbMovieId(tmdbMovieId);
+        Movie movie = movieService.findByTmdbMovieId(tmdbMovieId);
+        if (movie == null) {
+            String uri = "https://api.themoviedb.org/3/movie/" + tmdbMovieId + "?api_key=c27a471ab79060886b0f3aadcf79bef8&language=en-US&append_to_response=credits";
+            movie = createMovie((new RestTemplate()).getForObject(uri, Movie.class));
+        }
+        return movie;
+    }
+
+    @GetMapping(value = {"/discover", "/discover/{page}"}, produces = "application/json")
+    public Object getDiscover(@PathVariable(required = false) Integer page) {
+        final String uri = "https://api.themoviedb.org/3/movie/popular?api_key=c27a471ab79060886b0f3aadcf79bef8&language=en-US&page=" + (page == null ? 1 : page);
+        return (new RestTemplate()).getForObject(uri, Object.class);
     }
 
     @GetMapping(produces = "application/json")

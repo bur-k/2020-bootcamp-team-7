@@ -14,8 +14,8 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    void createMovie(Movie movie) {
-        movieRepository.insert(movie);
+    Movie createMovie(Movie movie) {
+        return movieRepository.insert(movie);
     }
 
     Movie findByTmdbMovieId(Integer tmdbMovieId) {

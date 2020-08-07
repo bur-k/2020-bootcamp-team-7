@@ -10,6 +10,9 @@ public class Crew {
     @JsonProperty("profile_path")
     public String profilePath;
 
+    public Crew() {
+    }
+
     public Crew(Integer tmdbPersonId, String job, String name, String profilePath) {
         this.tmdbPersonId = tmdbPersonId;
         this.job = job;
