@@ -1,38 +1,39 @@
 package com.example.backendspringboot.Movie;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.minidev.json.JSONArray;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-
 public class Movie {
-    @Field(name = "backdrop_path")
+    @JsonProperty("backdrop_path")
     public String backdropPath;
+    public Credits credits;
     public JSONArray genres;
-    @Id
-    @Field(name = "id")
-    public Integer tmdbId;
-    @Field(name = "imdb_id")
+    @JsonProperty("imdb_id")
     public String imdbId;
     public String overview;
-    @Field(name = "poster_path")
+    @JsonProperty("poster_path")
     public String posterPath;
-    @Field(name = "release_date")
+    @Field("releaseDate")
+    @JsonProperty("release_date")
     public String releaseDate;
     public Integer runtime;
     public String tagline;
+    @JsonProperty("id")
+    public Integer tmdbMovieId;
     public String title;
 
-    public Movie(String backdropPath, JSONArray genres, Integer tmdbId, String imdbId, String overview, String posterPath, String releaseDate, Integer runtime, String tagline, String title) {
+    public Movie(String backdropPath, Credits credits, JSONArray genres, String imdbId, String overview, String posterPath, String releaseDate, Integer runtime, String tagline, Integer tmdbMovieId, String title) {
         this.backdropPath = backdropPath;
+        this.credits = credits;
         this.genres = genres;
-        this.tmdbId = tmdbId;
         this.imdbId = imdbId;
         this.overview = overview;
         this.posterPath = posterPath;
         this.releaseDate = releaseDate;
         this.runtime = runtime;
         this.tagline = tagline;
+        this.tmdbMovieId = tmdbMovieId;
         this.title = title;
     }
 
@@ -44,20 +45,20 @@ public class Movie {
         this.backdropPath = backdropPath;
     }
 
+    public Credits getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Credits credits) {
+        this.credits = credits;
+    }
+
     public JSONArray getGenres() {
         return genres;
     }
 
     public void setGenres(JSONArray genres) {
         this.genres = genres;
-    }
-
-    public Integer getTmdbId() {
-        return tmdbId;
-    }
-
-    public void setTmdbId(Integer tmdbId) {
-        this.tmdbId = tmdbId;
     }
 
     public String getImdbId() {
@@ -92,11 +93,11 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
-    public int getRuntime() {
+    public Integer getRuntime() {
         return runtime;
     }
 
-    public void setRuntime(int runtime) {
+    public void setRuntime(Integer runtime) {
         this.runtime = runtime;
     }
 
@@ -106,6 +107,14 @@ public class Movie {
 
     public void setTagline(String tagline) {
         this.tagline = tagline;
+    }
+
+    public Integer getTmdbMovieId() {
+        return tmdbMovieId;
+    }
+
+    public void setTmdbMovieId(Integer tmdbMovieId) {
+        this.tmdbMovieId = tmdbMovieId;
     }
 
     public String getTitle() {

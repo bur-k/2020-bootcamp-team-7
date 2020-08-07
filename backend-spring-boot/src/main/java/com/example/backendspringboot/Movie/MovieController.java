@@ -1,14 +1,9 @@
 package com.example.backendspringboot.Movie;
 
-import com.google.gson.Gson;
-import net.minidev.json.JSONArray;
-import net.minidev.json.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("api/movies")
@@ -17,9 +12,9 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    @GetMapping(value = "/{tmdbId}", produces = "application/json")
-    public Movie getMovie(@PathVariable Integer tmdbId) {
-        return movieService.findByTmdbId(tmdbId);
+    @GetMapping(value = "/{tmdbMovieId}", produces = "application/json")
+    public Movie getMovie(@PathVariable Integer tmdbMovieId) {
+        return movieService.findByTmdbMovieId(tmdbMovieId);
     }
 
     @GetMapping(produces = "application/json")
@@ -33,25 +28,8 @@ public class MovieController {
     }
 
     @PostMapping(produces = "application/json")
-    public Movie createMovie(@RequestBody Map<String, Object> body) {
-        Movie movie = null;
-        try {
-            movie = new Movie(
-                    (String) body.get("backdrop_path"),
-                    (JSONArray) (new JSONParser()).parse((new Gson()).toJson(body.get("genres"), ArrayList.class)),
-                    (Integer) body.get("id"),
-                    (String) body.get("imdb_id"),
-                    (String) body.get("overview"),
-                    (String) body.get("poster_path"),
-                    (String) body.get("release_date"),
-                    (Integer) body.get("runtime"),
-                    (String) body.get("tagline"),
-                    (String) body.get("title")
-            );
-            movieService.createMovie(movie);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return movie;
+    public Movie createMovie(@RequestBody Movie movie) {
+        movieService.createMovie(movie);
+        return movieService.findByTmdbMovieId(movie.getTmdbMovieId());
     }
 }

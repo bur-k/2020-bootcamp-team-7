@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MovieRepository extends MongoRepository<Movie, Integer> {
-    Movie findByTmdbId(@Param("tmdbId") Integer tmdbId);
+    Movie findByTmdbMovieId(@Param("tmdbMovieId") Integer tmdbMovieId);
 }
