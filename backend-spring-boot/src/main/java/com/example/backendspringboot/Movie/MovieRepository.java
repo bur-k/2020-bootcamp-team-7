@@ -5,6 +5,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MovieRepository extends MongoRepository<Movie, String> {
+public interface MovieRepository extends MongoRepository<Movie, Integer> {
     Movie findByTmdbId(@Param("tmdbId") Integer tmdbId);
 }

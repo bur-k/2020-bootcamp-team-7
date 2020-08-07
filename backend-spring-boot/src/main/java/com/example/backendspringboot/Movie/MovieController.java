@@ -22,12 +22,12 @@ public class MovieController {
         return movieService.findByTmdbId(tmdbId);
     }
 
-    @GetMapping(value = "/", produces = "application/json")
+    @GetMapping(produces = "application/json")
     public List<Movie> getAllMovie() {
         return movieService.getAll();
     }
 
-    @DeleteMapping(value = "/", produces = "application/json")
+    @DeleteMapping(produces = "application/json")
     public void deleteAllMovie() {
         movieService.deleteAll();
     }
