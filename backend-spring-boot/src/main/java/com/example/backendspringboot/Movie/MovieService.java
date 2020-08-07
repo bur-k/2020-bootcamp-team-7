@@ -18,8 +18,8 @@ public class MovieService {
         movieRepository.insert(movie);
     }
 
-    Movie findByImdbId(String imdbId) {
-        return movieRepository.findByImdbId(imdbId);
+    Movie findByTmdbId(Integer tmdbId) {
+        return movieRepository.findByTmdbId(tmdbId);
     }
 
     void deleteAll() {

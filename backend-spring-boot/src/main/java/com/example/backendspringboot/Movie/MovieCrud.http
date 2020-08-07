@@ -1,12 +1,12 @@
-GET http://localhost:8080/api/movies/tt0137523
+GET http://localhost:8080/api/movies/550
 Accept: application/json
 
 ###
-DELETE http://localhost:8080/api/movies/deleteAll
+DELETE http://localhost:8080/api/movies
 Accept: application/json
 
 ###
-GET http://localhost:8080/api/movies/getAll
+GET http://localhost:8080/api/movies
 Accept: application/json
 
 ###

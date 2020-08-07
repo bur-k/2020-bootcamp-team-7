@@ -6,12 +6,12 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 
 public class Movie {
-    @Id
-    public String _id;
     @Field(name = "backdrop_path")
     public String backdropPath;
     public JSONArray genres;
-    public Integer id;
+    @Id
+    @Field(name = "id")
+    public Integer tmdbId;
     @Field(name = "imdb_id")
     public String imdbId;
     public String overview;
@@ -23,10 +23,10 @@ public class Movie {
     public String tagline;
     public String title;
 
-    public Movie(String backdropPath, JSONArray genres, Integer id, String imdbId, String overview, String posterPath, String releaseDate, Integer runtime, String tagline, String title) {
+    public Movie(String backdropPath, JSONArray genres, Integer tmdbId, String imdbId, String overview, String posterPath, String releaseDate, Integer runtime, String tagline, String title) {
         this.backdropPath = backdropPath;
         this.genres = genres;
-        this.id = id;
+        this.tmdbId = tmdbId;
         this.imdbId = imdbId;
         this.overview = overview;
         this.posterPath = posterPath;
@@ -52,12 +52,12 @@ public class Movie {
         this.genres = genres;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getTmdbId() {
+        return tmdbId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTmdbId(Integer tmdbId) {
+        this.tmdbId = tmdbId;
     }
 
     public String getImdbId() {
