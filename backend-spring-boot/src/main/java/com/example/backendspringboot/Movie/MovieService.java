@@ -18,15 +18,15 @@ public class MovieService {
         return movieRepository.insert(movie);
     }
 
-    Movie findByTmdbMovieId(Integer tmdbMovieId) {
-        return movieRepository.findByTmdbMovieId(tmdbMovieId);
+    Movie findMovieByTmdbMovieId(Integer tmdbMovieId) {
+        return movieRepository.findMovieByTmdbMovieId(tmdbMovieId);
     }
 
-    void deleteAll() {
-        movieRepository.deleteAll();
+    void deleteAllMovies(boolean exists) {
+        movieRepository.deleteMoviesByTmdbMovieIdExists(exists);
     }
 
-    List<Movie> getAll() {
-        return movieRepository.findAll();
+    List<Movie> getAllMovies(boolean exists) {
+        return movieRepository.getMoviesByTmdbMovieIdExists(exists);
     }
 }
