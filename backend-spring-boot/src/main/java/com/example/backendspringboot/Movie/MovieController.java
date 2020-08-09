@@ -15,7 +15,7 @@ public class MovieController {
 
     @GetMapping(value = "/{tmdbMovieId}", produces = "application/json")
     public Movie getMovie(@PathVariable Integer tmdbMovieId) {
-        Movie movie = movieService.findByTmdbMovieId(tmdbMovieId);
+        Movie movie = movieService.findMovieByTmdbMovieId(tmdbMovieId);
         if (movie == null) {
             String uri = "https://api.themoviedb.org/3/movie/" + tmdbMovieId + "?api_key=c27a471ab79060886b0f3aadcf79bef8&language=en-US&append_to_response=credits";
             movie = createMovie((new RestTemplate()).getForObject(uri, Movie.class));
@@ -30,18 +30,20 @@ public class MovieController {
     }
 
     @GetMapping(produces = "application/json")
-    public List<Movie> getAllMovie() {
-        return movieService.getAll();
+    public List<Movie> getAllMovies() {
+        return movieService.getAllMovies(true);
     }
 
     @DeleteMapping(produces = "application/json")
-    public void deleteAllMovie() {
-        movieService.deleteAll();
+    public void deleteAllMovies() {
+        movieService.deleteAllMovies(true);
     }
 
     @PostMapping(produces = "application/json")
     public Movie createMovie(@RequestBody Movie movie) {
-        movieService.createMovie(movie);
-        return movieService.findByTmdbMovieId(movie.getTmdbMovieId());
+        Movie movie1 = movieService.findMovieByTmdbMovieId(movie.getTmdbMovieId());
+        if (movie1 == null)
+            movie1 = movieService.createMovie(movie);
+        return movie1;
     }
 }
