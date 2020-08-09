@@ -14,19 +14,19 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    void createMovie(Movie movie) {
-        movieRepository.insert(movie);
+    Movie createMovie(Movie movie) {
+        return movieRepository.insert(movie);
     }
 
-    Movie findByImdbId(String imdbId) {
-        return movieRepository.findByImdbId(imdbId);
+    Movie findMovieByTmdbMovieId(Integer tmdbMovieId) {
+        return movieRepository.findMovieByTmdbMovieId(tmdbMovieId);
     }
 
-    void deleteAll() {
-        movieRepository.deleteAll();
+    void deleteAllMovies(boolean exists) {
+        movieRepository.deleteMoviesByTmdbMovieIdExists(exists);
     }
 
-    List<Movie> getAll() {
-        return movieRepository.findAll();
+    List<Movie> getAllMovies(boolean exists) {
+        return movieRepository.getMoviesByTmdbMovieIdExists(exists);
     }
 }

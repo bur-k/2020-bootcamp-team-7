@@ -4,8 +4,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface MovieRepository extends MongoRepository<Movie, String> {
-    public Movie findByImdbId(@Param("imdbId") String imdbId);
+import java.util.List;
 
+@Repository
+public interface MovieRepository extends MongoRepository<Movie, Integer> {
+    Movie findMovieByTmdbMovieId(@Param("tmdbMovieId") Integer tmdbMovieId);
+    List<Movie> getMoviesByTmdbMovieIdExists(boolean exists);
+    void deleteMoviesByTmdbMovieIdExists(boolean exists);
 }
