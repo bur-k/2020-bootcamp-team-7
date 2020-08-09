@@ -2,7 +2,7 @@ package com.example.backendspringboot.Movie;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import net.minidev.json.JSONArray;
-import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.annotation.Id;
 
 public class Movie {
     @JsonProperty("backdrop_path")
@@ -14,11 +14,11 @@ public class Movie {
     public String overview;
     @JsonProperty("poster_path")
     public String posterPath;
-    @Field("releaseDate")
     @JsonProperty("release_date")
     public String releaseDate;
     public Integer runtime;
     public String tagline;
+    @Id
     @JsonProperty("id")
     public Integer tmdbMovieId;
     public String title;
