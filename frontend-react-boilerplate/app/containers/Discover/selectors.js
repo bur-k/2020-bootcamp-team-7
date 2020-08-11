@@ -21,5 +21,28 @@ const makeSelectDiscover = () =>
     substate => substate,
   );
 
+const makeSelectMovies = () =>
+  createSelector(
+    selectDiscoverDomain,
+    substate => substate.movies,
+  );
+
+const makeSelectError = () =>
+  createSelector(
+    selectDiscoverDomain,
+    substate => substate.error,
+  );
+
+const makeSelectLoading = () =>
+  createSelector(
+    selectDiscoverDomain,
+    substate => substate.loading,
+  );
+
 export default makeSelectDiscover;
-export { selectDiscoverDomain };
+export {
+  selectDiscoverDomain,
+  makeSelectMovies,
+  makeSelectLoading,
+  makeSelectError,
+};

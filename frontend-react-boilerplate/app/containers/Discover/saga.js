@@ -1,6 +1,19 @@
-// import { take, call, put, select } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { pullDiscoverError, pullDiscoverSuccess } from './actions';
+import request from '../../utils/request';
+import { PULL_DISCOVER } from './constants';
 
-// Individual exports for testing
+function* pullMovies() {
+  const url = 'http://localhost:8080/api/movies/discover';
+  const options = { method: 'GET' };
+  try {
+    const movies = yield call(request, url, options);
+    yield put(pullDiscoverSuccess(movies));
+  } catch (error) {
+    yield put(pullDiscoverError(error));
+  }
+}
+
 export default function* discoverSaga() {
-  // See example in containers/HomePage/saga.js
+  yield takeLatest(PULL_DISCOVER, pullMovies);
 }

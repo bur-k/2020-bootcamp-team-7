@@ -4,15 +4,38 @@
  *
  */
 import produce from 'immer';
-import { DEFAULT_ACTION } from './constants';
+import {
+  DEFAULT_ACTION,
+  PULL_DISCOVER,
+  PULL_DISCOVER_SUCCESS,
+  PULL_DISCOVER_ERROR,
+} from './constants';
 
-export const initialState = {};
+export const initialState = {
+  movies: null,
+  loading: false,
+  error: false,
+};
 
 /* eslint-disable default-case, no-param-reassign */
 const discoverReducer = (state = initialState, action) =>
-  produce(state, (/* draft */) => {
+  produce(state, draft => {
     switch (action.type) {
       case DEFAULT_ACTION:
+        break;
+      case PULL_DISCOVER:
+        draft.loading = true;
+        draft.error = false;
+        draft.movies = null;
+        break;
+      case PULL_DISCOVER_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.movies = action.movies;
+        break;
+      case PULL_DISCOVER_ERROR:
+        draft.loading = false;
+        draft.error = action.error;
         break;
     }
   });
