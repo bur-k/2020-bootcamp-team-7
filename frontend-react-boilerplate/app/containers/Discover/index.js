@@ -22,27 +22,28 @@ import makeSelectDiscover, {
 import reducer from './reducer';
 import saga from './saga';
 import { pullDiscover } from './actions';
-import MovieCard from './MovieCard';
+import MovieCard from '../../components/MovieCard';
 
 export function Discover({ movies, loading, error, onLoadDiscover }) {
   useInjectReducer({ key: 'discover', reducer });
   useInjectSaga({ key: 'discover', saga });
 
-  // eslint-disable-next-line prefer-const
   const movieCols =
     movies === null
       ? null
       : movies.results.map(m => (
-        <Col
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-          xl={2}
-          style={{ marginBottom: '10px' }}
-        >
-          <MovieCard movie={m} />
-        </Col>
+          <>
+            <Col
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              xl={2}
+              style={{ margin: '5px 0px' }}
+            >
+              <MovieCard movie={m} />
+            </Col>
+          </>
       ));
 
   useEffect(() => {

@@ -18,6 +18,7 @@ import { Dropdown, Image, Nav, Navbar } from 'react-bootstrap';
 import firebase from 'firebase/app';
 import { StyledFirebaseAuth } from 'react-firebaseui/index';
 import styledFirebaseConfig from './styledFirebaseConfig';
+import MovieDetails from '../MovieDetails';
 
 export default function App() {
   const [isSignedIn, setSignedIn] = useState(false);
@@ -37,6 +38,7 @@ export default function App() {
   const getProfilePhoto = () => firebase.auth().currentUser.photoURL;
   const routes = isSignedIn ? (
     <Switch>
+      <Route path="/movie/:id" component={MovieDetails} />
       <Route path="/discover" component={Discover} />
       <Redirect exact from="/" to="/discover" />
       <Route component={NotFoundPage} />

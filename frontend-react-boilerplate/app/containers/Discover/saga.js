@@ -3,7 +3,7 @@ import { pullDiscoverError, pullDiscoverSuccess } from './actions';
 import request from '../../utils/request';
 import { PULL_DISCOVER } from './constants';
 
-function* pullMovies() {
+function* getMovies() {
   const url = 'http://localhost:8080/api/movies/discover';
   const options = { method: 'GET' };
   try {
@@ -15,5 +15,5 @@ function* pullMovies() {
 }
 
 export default function* discoverSaga() {
-  yield takeLatest(PULL_DISCOVER, pullMovies);
+  yield takeLatest(PULL_DISCOVER, getMovies);
 }
