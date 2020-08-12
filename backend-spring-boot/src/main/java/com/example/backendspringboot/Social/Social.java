@@ -1,38 +1,42 @@
 package com.example.backendspringboot.Social;
 
-import java.util.List;
+import java.util.Set;
 
 
 public class Social {
 
      
 
-    private List<Social> followers;
-    private List<Social> follows;
+    private Set<Social> followers;
+    private Set<Social> following;
     private String name;
     private String userId;
 
-    public Social(String name, String userId,List<Social> followers,List<Social> follows) {
+    public Social(String name, String userId,Set<Social> followers,Set<Social> following) {
         this.followers = followers;
-        this.follows = follows;
+        this.following = following;
         this.name = name;
         this.userId = userId;
     }
+    public Social(String name, String userId){
+        this(name, userId, null, null);
 
-    public List<Social> getFollowers() {
+    }
+
+    public Set<Social> getFollowers() {
         return this.followers;
     }
 
-    public void setFollowers(List<Social> followers) {
+    public void setFollowers(Set<Social> followers) {
         this.followers = followers;
     }
 
-    public List<Social> getFollows() {
-        return this.follows;
+    public Set<Social> getFollowing() {
+        return this.following;
     }
 
-    public void setFollows(List<Social> follows) {
-        this.follows = follows;
+    public void setFollowing(Set<Social> following) {
+        this.following = following;
     }
 
 

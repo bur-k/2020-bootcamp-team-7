@@ -1,6 +1,8 @@
 package com.example.backendspringboot.Social;
 
-import java.util.List;
+
+
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,34 +19,27 @@ public class SocialService {
         this.socialRepository = followRepository;
     }
 
-    
-    List<Social> getAllSocial(Social social) {
+    Social findByUserId(Social user) {
+        return socialRepository.findByUserId(user);
+    }
+
+    void createUser(String userId,String name) {
+        Social user = new Social(userId,name);
+        socialRepository.insert(user);
+    }
+    void addFollow(Social user, Social followId) {
+            Set<Social> followList = user.getFollowing();
+            followList.add(followId);
+            user.setFollowing(followList);         
+
         
-       
-       return socialRepository.getAllSocial(social.getUserId());
     }
+    void unFollow(Social user,Social follow) {
+        Set<Social> followList = user.getFollowing();
+        followList.remove(follow);
+        user.setFollowing(followList);     
 
-    Social findUserSocialId(String userId) {
-
-        return socialRepository.findBySocialId(userId);
     }
-
-
-    Social addSocialer(final Social social) {
-        return socialRepository.insert(social);
-    }
-
-    Social removeSocialer(final Social social) {
-        return socialRepository.remove(social.getUserId());
-    }
-
-    Social addSocial(final Social social){
-        return socialRepository.insert(social);
-    }
-    Social unSocial(final Social social){
-        return socialRepository.remove(social.getUserId());
-    }
-
 
 
 

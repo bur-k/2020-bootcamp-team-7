@@ -1,64 +1,57 @@
 package com.example.backendspringboot.Social;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
+@RequestMapping("/api/social")
 @RestController
-@RequestMapping("/api/v1/user/social")
-
-
 public class SocialController {
     private final SocialService socialService;
 
-
     @Autowired
-    SocialController(SocialService socialService){
+    public SocialController(SocialService socialService) {
         this.socialService = socialService;
     }
 
 
-    @PostMapping(value = "/{userID}", produces = "application/json")
-    public Social addSocialer(@PathVariable String userId, @RequestBody Social social) {
-        social = socialService.addSocialer(social);
-        
 
-       if (socialService.findUserSocialId(social.getUserId()) == social) {
-            return null;
-        } 
-        
-            return socialService.addSocial(social);
+
+    @GetMapping(value = "/{userId}",produces = "application/json")
+    public Social findById(@PathVariable("userId")Social userId) {
+        Social user = socialService.findByUserId(userId);
+        return user;
+    }
+
+
+    @PostMapping(produces = "application/json")
+    public void createSocial(@RequestBody String userId,String name){
        
+        socialService.createUser(userId,name);
     }
 
-    @GetMapping(value = "/{userId}", produces = "application/json")
-    public List<Social> getAllSocial(@PathVariable String userId, @RequestBody Social social) {
+    @PostMapping(path= "/follow",produces = "application/json")
+    public void follow(@RequestParam("userId") Social userId,@RequestParam("followId") Social followId){
+         
+        socialService.addFollow(userId, followId);
 
-       if(social == socialService.findUserSocialId(userId)){
-          return socialService.getAllSocial(social);
-       }
-       return socialService.getAllSocial(social);
-      
     }
 
-    @DeleteMapping(value = "/{userId}", produces = "application/json")
-    public Social unSocial(@PathVariable String userId, @RequestBody Social social) {
-        social = socialService.findUserSocialId(social.getUserId());
-        if (social != null) {
-            return socialService.unSocial(social);
-        }
-        return null;
+    @PutMapping(value = "/{userId}", produces = "application/json")
+    public void unFollow(@RequestParam("userId") Social userId,@RequestParam("followId") Social followId){
+        socialService.unFollow(userId, followId);
     }
 
-
-    
 
 
 
