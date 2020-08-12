@@ -94,7 +94,12 @@ export default function App() {
             </>
           ) : (
             <StyledFirebaseAuth
-              uiConfig={styledFirebaseConfig}
+              uiConfig={{
+                ...styledFirebaseConfig,
+                callbacks: {
+                  signInSuccessWithAuthResult: e => console.log(e),
+                },
+              }}
               firebaseAuth={firebase.auth()}
             />
           )}
