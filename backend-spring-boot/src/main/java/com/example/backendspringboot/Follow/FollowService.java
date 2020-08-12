@@ -17,16 +17,16 @@ public class FollowService {
         this.followRepository = followRepository;
     }
 
-
-    List<Follow> getAllFollow(final Follow follow) {
+    
+    List<Follow> getAllFollow(Follow follow) {
         
-       // return followRepository.findAll(follow.getUserId());
-       return followRepository.findAll();
+       
+       return followRepository.getAllFollow(follow.getUserId());
     }
 
-    Follow findUserFollowId(final Follow follow) {
+    Follow findUserFollowId(String userId) {
 
-        return followRepository.findByFollowId(follow.getUserId());
+        return followRepository.findByFollowId(userId);
     }
 
 

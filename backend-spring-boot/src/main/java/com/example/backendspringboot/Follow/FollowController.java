@@ -1,5 +1,7 @@
 package com.example.backendspringboot.Follow;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,21 +28,27 @@ public class FollowController {
     @PostMapping(value = "/{userID}", produces = "application/json")
     public Follow addFollower(@PathVariable String userId, @RequestBody Follow follow) {
         follow = followService.addFollower(follow);
-        if (followService.getAllFollow.next().equals(userId)) {
+     /*   if (followService.getAllFollow.next().equals(userId)) {
             return null;
-        }
+        } 
+        */
             return followService.addFollow(follow);
        
     }
 
     @GetMapping(value = "/{userId}", produces = "application/json")
-    public List<Follow> getAllFollow(@PathVariable String userId) {
-        return followService.getAllFollow();
+    public List<Follow> getAllFollow(@PathVariable String userId, @RequestBody Follow follow) {
+
+       if(follow == followService.findUserFollowId(userId)){
+          return followService.getAllFollow(follow);
+       }
+       return followService.getAllFollow(follow);
+      
     }
 
     @DeleteMapping(value = "/{userId}", produces = "application/json")
     public Follow unFollow(@PathVariable String userId, @RequestBody Follow follow) {
-        follow = followService.findUserFollowId(follow);
+        follow = followService.findUserFollowId(follow.getUserId());
         if (follow != null) {
             return followService.unFollow(follow);
         }
