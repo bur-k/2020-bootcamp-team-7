@@ -15,6 +15,7 @@ export const initialState = {
   movies: null,
   loading: false,
   error: false,
+  page: 1,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -27,6 +28,7 @@ const discoverReducer = (state = initialState, action) =>
         draft.loading = true;
         draft.error = false;
         draft.movies = null;
+        draft.page = action.page;
         break;
       case PULL_DISCOVER_SUCCESS:
         draft.loading = false;

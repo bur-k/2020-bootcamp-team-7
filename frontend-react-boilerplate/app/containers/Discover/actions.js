@@ -16,9 +16,10 @@ export function defaultAction() {
     type: DEFAULT_ACTION,
   };
 }
-export function pullDiscover() {
+export function pullDiscover(page) {
   return {
     type: PULL_DISCOVER,
+    page,
   };
 }
 export function pullDiscoverSuccess(movies) {
