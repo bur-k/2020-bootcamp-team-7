@@ -9,6 +9,9 @@ import {
   PULL_MOVIE,
   PULL_MOVIE_ERROR,
   PULL_MOVIE_SUCCESS,
+  PUSH_REVIEW,
+  PUSH_REVIEW_ERROR,
+  PUSH_REVIEW_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -16,6 +19,8 @@ export const initialState = {
   loading: false,
   error: false,
   id: null,
+  review: null,
+  userReview: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -36,6 +41,22 @@ const movieDetailsReducer = (state = initialState, action) =>
         draft.error = false;
         break;
       case PULL_MOVIE_ERROR:
+        draft.loading = false;
+        draft.error = action.error;
+        break;
+      case PUSH_REVIEW:
+        draft.loading = true;
+        draft.error = false;
+        draft.userReview = action.userReview;
+        draft.review = null;
+        break;
+      case PUSH_REVIEW_SUCCESS:
+        draft.userReview = null;
+        draft.review = action.review;
+        draft.loading = false;
+        draft.error = false;
+        break;
+      case PUSH_REVIEW_ERROR:
         draft.loading = false;
         draft.error = action.error;
         break;

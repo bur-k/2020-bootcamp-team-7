@@ -45,6 +45,17 @@ const makeSelectError = () =>
     substate => substate.error,
   );
 
+const makeSelectUserReview = () =>
+  createSelector(
+    selectMovieDetailsDomain,
+    substate => substate.userReview,
+  );
+
+const makeSelectReview = () =>
+  createSelector(
+    selectMovieDetailsDomain,
+    substate => substate.review,
+  );
 export default makeSelectMovieDetails;
 export {
   selectMovieDetailsDomain,
@@ -52,4 +63,6 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeSelectId,
+  makeSelectUserReview,
+  makeSelectReview,
 };

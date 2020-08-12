@@ -5,6 +5,8 @@
  *
  * @return {object}          The parsed JSON from the request
  */
+import firebase from 'firebase/app';
+
 function parseJSON(response) {
   if (response.status === 204 || response.status === 205) {
     return null;
@@ -38,7 +40,20 @@ function checkStatus(response) {
  * @return {object}           The response data
  */
 export default function request(url, options) {
-  return fetch(url, options)
-    .then(checkStatus)
-    .then(parseJSON);
+  const headers = options.headers || {};
+
+  return firebase
+    .auth()
+    .currentUser.getIdToken(true)
+    .then(idToken => {
+      const auth = idToken && { Authorization: `Bearer ${idToken}` };
+
+      return fetch(url, {
+        method: options.method,
+        headers: { ...auth, ...options.headers },
+        body: options.body,
+      })
+        .then(checkStatus)
+        .then(parseJSON);
+    });
 }

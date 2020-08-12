@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,11 +14,15 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import {
+  Accordion,
   Badge,
+  Button,
   Card,
   Col,
   Container,
+  Form,
   Image,
+  NavLink,
   Row,
   Table,
 } from 'react-bootstrap';
@@ -27,14 +31,24 @@ import makeSelectMovieDetails, {
   makeSelectId,
   makeSelectLoading,
   makeSelectMovie,
+  makeSelectReview,
+  makeSelectUserReview,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { pullMovie } from './actions';
+import { pullMovie, pushReview } from './actions';
 
-export function MovieDetails({ movie, loading, error, onLoadMovie }) {
+export function MovieDetails({
+  movie,
+  loading,
+  error,
+  onLoadMovie,
+  review,
+  onSubmitReview,
+}) {
   useInjectReducer({ key: 'movieDetails', reducer });
   useInjectSaga({ key: 'movieDetails', saga });
+  const [_userReview, setUserReview] = useState({});
 
   const { id } = useParams();
   const _movie =
@@ -141,6 +155,90 @@ export function MovieDetails({ movie, loading, error, onLoadMovie }) {
     <div>
       <Container style={{}} fluid>
         {_movie}
+        <Row>
+          <Col xs={12} lg={{ span: 8, offset: 2 }}>
+            <Accordion>
+              <Card className="bg-dark text-white">
+                <Card.Header>
+                  <Accordion.Toggle
+                    as={NavLink}
+                    className="text-white"
+                    variant="link"
+                    eventKey="0"
+                  >
+                    Leave a review
+                  </Accordion.Toggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body>
+                    <Form
+                      onSubmit={e => {
+                        e.preventDefault();
+                        onSubmitReview(_userReview);
+                      }}
+                    >
+                      <Form.Group controlId="exampleForm.ControlInput1">
+                        <Form.Label>Review Title</Form.Label>
+                        <Form.Control
+                          type="input"
+                          placeholder="Title"
+                          onChange={e => {
+                            setUserReview({
+                              ..._userReview,
+                              reviewTitle: e.target.value,
+                            });
+                          }}
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Review</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows="3"
+                          onChange={e => {
+                            setUserReview({
+                              ..._userReview,
+                              review: e.target.value,
+                            });
+                          }}
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="exampleForm.ControlSelect1">
+                        <Form.Label>Rate Movie</Form.Label>
+                        <Form.Control
+                          as="select"
+                          onChange={e => {
+                            setUserReview({
+                              ..._userReview,
+                              score: e.target.value,
+                            });
+                          }}
+                        >
+                          <option>5</option>
+                          <option>4</option>
+                          <option>3</option>
+                          <option>2</option>
+                          <option>1</option>
+                        </Form.Control>
+                      </Form.Group>
+                      <Button type="submit">Submit Review</Button>
+                    </Form>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card>
+                <Card.Header>
+                  <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                    View other users' reviews
+                  </Accordion.Toggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey="1">
+                  <Card.Body>Hello! I'm another body</Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
+          </Col>
+        </Row>
       </Container>
     </div>
   );
@@ -152,6 +250,7 @@ MovieDetails.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   onLoadMovie: PropTypes.func,
+  onSubmitReview: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -160,6 +259,8 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
   id: makeSelectId(),
+  review: makeSelectReview(),
+  userReview: makeSelectUserReview(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -167,6 +268,9 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     onLoadMovie: id => {
       dispatch(pullMovie(id));
+    },
+    onSubmitReview: userReview => {
+      dispatch(pushReview(userReview));
     },
   };
 }
