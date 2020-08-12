@@ -27,30 +27,53 @@ import {
   Table,
 } from 'react-bootstrap';
 import makeSelectMovieDetails, {
-  makeSelectError,
   makeSelectId,
-  makeSelectLoading,
   makeSelectMovie,
   makeSelectReview,
   makeSelectUserReview,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { pullMovie, pushReview } from './actions';
+import { pullMovie, pullReview, pushReview } from './actions';
 
 export function MovieDetails({
   movie,
-  loading,
-  error,
   onLoadMovie,
   review,
   onSubmitReview,
+  onLoadReview,
 }) {
   useInjectReducer({ key: 'movieDetails', reducer });
   useInjectSaga({ key: 'movieDetails', saga });
+
+  useEffect(() => {
+    onLoadMovie(id);
+  }, []);
+
+  useEffect(() => {
+    onLoadReview(id);
+  }, []);
+
   const [_userReview, setUserReview] = useState({});
 
   const { id } = useParams();
+  const reviewList =
+    review === null
+      ? null
+      : review.userReviews.map(rev => (
+          <>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Label>
+                {/* @{rev.userId} says */}
+                {rev.reviewTitle}
+              </Form.Label>
+              <Form.Control as="textarea" rows="3" readOnly>
+                {rev.review}
+              </Form.Control>
+            </Form.Group>
+            <hr />
+          </>
+        ));
   const _movie =
     movie === null ? null : (
       <>
@@ -62,7 +85,7 @@ export function MovieDetails({
               rounded
             />
             <Card.ImgOverlay style={{ textAlign: 'right' }}>
-              <Badge pill variant="dark">
+              <Badge variant="dark">
                 <a
                   style={{ color: 'yellow' }}
                   href={`https://www.imdb.com/title/${movie.imdb_id}`}
@@ -147,10 +170,6 @@ export function MovieDetails({
       </>
     );
 
-  useEffect(() => {
-    onLoadMovie(id);
-  }, []);
-
   return (
     <div>
       <Container style={{}} fluid>
@@ -226,14 +245,19 @@ export function MovieDetails({
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card>
+              <Card className="bg-dark text-white">
                 <Card.Header>
-                  <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                  <Accordion.Toggle
+                    as={NavLink}
+                    className="text-white"
+                    variant="link"
+                    eventKey="1"
+                  >
                     View other users' reviews
                   </Accordion.Toggle>
                 </Card.Header>
                 <Accordion.Collapse eventKey="1">
-                  <Card.Body>Hello! I'm another body</Card.Body>
+                  <Card.Body>{reviewList}</Card.Body>
                 </Accordion.Collapse>
               </Card>
             </Accordion>
@@ -247,17 +271,15 @@ export function MovieDetails({
 MovieDetails.propTypes = {
   dispatch: PropTypes.func.isRequired,
   movie: PropTypes.object,
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  review: PropTypes.object,
   onLoadMovie: PropTypes.func,
+  onLoadReview: PropTypes.func,
   onSubmitReview: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   movieDetails: makeSelectMovieDetails(),
   movie: makeSelectMovie(),
-  loading: makeSelectLoading(),
-  error: makeSelectError(),
   id: makeSelectId(),
   review: makeSelectReview(),
   userReview: makeSelectUserReview(),
@@ -271,6 +293,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmitReview: userReview => {
       dispatch(pushReview(userReview));
+    },
+    onLoadReview: id => {
+      dispatch(pullReview(id));
     },
   };
 }

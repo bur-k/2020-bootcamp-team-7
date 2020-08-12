@@ -12,6 +12,9 @@ import {
   PUSH_REVIEW,
   PUSH_REVIEW_SUCCESS,
   PUSH_REVIEW_ERROR,
+  PULL_REVIEW,
+  PULL_REVIEW_SUCCESS,
+  PULL_REVIEW_ERROR,
 } from './constants';
 
 export function defaultAction() {
@@ -36,6 +39,24 @@ export function pullMovieSuccess(movie) {
 export function pullMovieError(error) {
   return {
     type: PULL_MOVIE_ERROR,
+    error,
+  };
+}
+
+export function pullReview() {
+  return {
+    type: PULL_REVIEW,
+  };
+}
+export function pullReviewSuccess(review) {
+  return {
+    type: PULL_REVIEW_SUCCESS,
+    review,
+  };
+}
+export function pullReviewError(error) {
+  return {
+    type: PULL_REVIEW_ERROR,
     error,
   };
 }

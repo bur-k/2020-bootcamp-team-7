@@ -9,6 +9,9 @@ import {
   PULL_MOVIE,
   PULL_MOVIE_ERROR,
   PULL_MOVIE_SUCCESS,
+  PULL_REVIEW,
+  PULL_REVIEW_ERROR,
+  PULL_REVIEW_SUCCESS,
   PUSH_REVIEW,
   PUSH_REVIEW_ERROR,
   PUSH_REVIEW_SUCCESS,
@@ -16,8 +19,6 @@ import {
 
 export const initialState = {
   movie: null,
-  loading: false,
-  error: false,
   id: null,
   review: null,
   userReview: null,
@@ -31,33 +32,32 @@ const movieDetailsReducer = (state = initialState, action) =>
         break;
       case PULL_MOVIE:
         draft.movie = null;
-        draft.loading = true;
-        draft.error = false;
         draft.id = action.id;
         break;
       case PULL_MOVIE_SUCCESS:
         draft.movie = action.movie;
-        draft.loading = false;
-        draft.error = false;
         break;
       case PULL_MOVIE_ERROR:
-        draft.loading = false;
+        draft.error = action.error;
+        break;
+      case PULL_REVIEW:
+        draft.review = null;
+        break;
+      case PULL_REVIEW_SUCCESS:
+        draft.review = action.review;
+        break;
+      case PULL_REVIEW_ERROR:
         draft.error = action.error;
         break;
       case PUSH_REVIEW:
-        draft.loading = true;
-        draft.error = false;
         draft.userReview = action.userReview;
         draft.review = null;
         break;
       case PUSH_REVIEW_SUCCESS:
         draft.userReview = null;
         draft.review = action.review;
-        draft.loading = false;
-        draft.error = false;
         break;
       case PUSH_REVIEW_ERROR:
-        draft.loading = false;
         draft.error = action.error;
         break;
     }

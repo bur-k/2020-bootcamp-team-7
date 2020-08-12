@@ -1,10 +1,12 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { PULL_MOVIE, PUSH_REVIEW } from './constants';
+import { PULL_MOVIE, PULL_REVIEW, PUSH_REVIEW } from './constants';
 import { makeSelectId, makeSelectUserReview } from './selectors';
 import request from '../../utils/request';
 import {
   pullMovieError,
   pullMovieSuccess,
+  pullReviewError,
+  pullReviewSuccess,
   pushReviewError,
   pushReviewSuccess,
 } from './actions';
@@ -13,6 +15,7 @@ import {
 export default function* movieDetailsSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(PULL_MOVIE, getMovie);
+  yield takeLatest(PULL_REVIEW, getReview);
   yield takeLatest(PUSH_REVIEW, postUserReview);
 }
 
@@ -25,6 +28,18 @@ function* getMovie() {
     yield put(pullMovieSuccess(movie));
   } catch (error) {
     yield put(pullMovieError(error));
+  }
+}
+
+function* getReview() {
+  const id = yield select(makeSelectId());
+  const url = `http://localhost:8080/api/reviews/${id}`;
+  const options = { method: 'GET' };
+  try {
+    const movie = yield call(request, url, options);
+    yield put(pullReviewSuccess(movie));
+  } catch (error) {
+    yield put(pullReviewError());
   }
 }
 
