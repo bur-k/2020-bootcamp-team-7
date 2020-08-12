@@ -1,4 +1,4 @@
-package com.example.backendspringboot.Follow;
+package com.example.backendspringboot.Social;
 
 import java.util.List;
 
@@ -12,45 +12,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/user/follow")
+@RequestMapping("/api/v1/user/social")
 
 
-public class FollowController {
-    private final FollowService followService;
+public class SocialController {
+    private final SocialService socialService;
 
 
     @Autowired
-    FollowController(FollowService followService){
-        this.followService = followService;
+    SocialController(SocialService socialService){
+        this.socialService = socialService;
     }
 
 
     @PostMapping(value = "/{userID}", produces = "application/json")
-    public Follow addFollower(@PathVariable String userId, @RequestBody Follow follow) {
-        follow = followService.addFollower(follow);
-     /*   if (followService.getAllFollow.next().equals(userId)) {
+    public Social addSocialer(@PathVariable String userId, @RequestBody Social social) {
+        social = socialService.addSocialer(social);
+        
+
+       if (socialService.findUserSocialId(social.getUserId()) == social) {
             return null;
         } 
-        */
-            return followService.addFollow(follow);
+        
+            return socialService.addSocial(social);
        
     }
 
     @GetMapping(value = "/{userId}", produces = "application/json")
-    public List<Follow> getAllFollow(@PathVariable String userId, @RequestBody Follow follow) {
+    public List<Social> getAllSocial(@PathVariable String userId, @RequestBody Social social) {
 
-       if(follow == followService.findUserFollowId(userId)){
-          return followService.getAllFollow(follow);
+       if(social == socialService.findUserSocialId(userId)){
+          return socialService.getAllSocial(social);
        }
-       return followService.getAllFollow(follow);
+       return socialService.getAllSocial(social);
       
     }
 
     @DeleteMapping(value = "/{userId}", produces = "application/json")
-    public Follow unFollow(@PathVariable String userId, @RequestBody Follow follow) {
-        follow = followService.findUserFollowId(follow.getUserId());
-        if (follow != null) {
-            return followService.unFollow(follow);
+    public Social unSocial(@PathVariable String userId, @RequestBody Social social) {
+        social = socialService.findUserSocialId(social.getUserId());
+        if (social != null) {
+            return socialService.unSocial(social);
         }
         return null;
     }

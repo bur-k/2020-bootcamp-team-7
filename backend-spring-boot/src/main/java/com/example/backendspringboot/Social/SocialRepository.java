@@ -1,4 +1,4 @@
-package com.example.backendspringboot.Follow;
+package com.example.backendspringboot.Social;
 
 import java.util.List;
 
@@ -8,12 +8,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface FollowRepository extends MongoRepository<Follow, String> {
+public interface SocialRepository extends MongoRepository<Social, String> {
     
-   public Follow findByFollowId(@Param("followId") String userId);
-   public Follow remove(Follow follow);
-   public List<Follow> getAllFollow(@Param("userId") String userId);
-   public List<Follow> getAllFollowers(@Param("userId") String userId);
+   public Social findBySocialId(@Param("userId") String userId);
+   public Social remove(@Param("userId")String userId);
+   public List<Social> getAllSocial(@Param("userId") String userId);
+   public List<Social> getAllSocialers(@Param("userId") String userId);
 
 
 

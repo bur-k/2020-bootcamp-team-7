@@ -1,4 +1,4 @@
-package com.example.backendspringboot.Follow;
+package com.example.backendspringboot.Social;
 
 import java.util.List;
 
@@ -7,42 +7,42 @@ import org.springframework.stereotype.Service;
 
 @Service
 
-public class FollowService {
+public class SocialService {
 
-    private final FollowRepository followRepository;
+    private final SocialRepository socialRepository;
     
 
     @Autowired
-    FollowService(final FollowRepository followRepository) {
-        this.followRepository = followRepository;
+    SocialService(final SocialRepository followRepository) {
+        this.socialRepository = followRepository;
     }
 
     
-    List<Follow> getAllFollow(Follow follow) {
+    List<Social> getAllSocial(Social social) {
         
        
-       return followRepository.getAllFollow(follow.getUserId());
+       return socialRepository.getAllSocial(social.getUserId());
     }
 
-    Follow findUserFollowId(String userId) {
+    Social findUserSocialId(String userId) {
 
-        return followRepository.findByFollowId(userId);
+        return socialRepository.findBySocialId(userId);
     }
 
 
-    Follow addFollower(final Follow follow) {
-        return followRepository.insert(follow);
+    Social addSocialer(final Social social) {
+        return socialRepository.insert(social);
     }
 
-    Follow removeFollower(final Follow follow) {
-        return followRepository.remove(follow);
+    Social removeSocialer(final Social social) {
+        return socialRepository.remove(social.getUserId());
     }
 
-    Follow addFollow(final Follow follow){
-        return followRepository.insert(follow);
+    Social addSocial(final Social social){
+        return socialRepository.insert(social);
     }
-    Follow unFollow(final Follow follow){
-        return followRepository.remove(follow);
+    Social unSocial(final Social social){
+        return socialRepository.remove(social.getUserId());
     }
 
 

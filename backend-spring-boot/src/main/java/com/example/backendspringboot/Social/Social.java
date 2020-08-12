@@ -1,37 +1,37 @@
-package com.example.backendspringboot.Follow;
+package com.example.backendspringboot.Social;
 
 import java.util.List;
 
 
-public class Follow {
+public class Social {
 
      
 
-    private List<Follow> followers;
-    private List<Follow> follows;
+    private List<Social> followers;
+    private List<Social> follows;
     private String name;
     private String userId;
 
-    public Follow(String name, String userId,List<Follow> followers,List<Follow> follows) {
+    public Social(String name, String userId,List<Social> followers,List<Social> follows) {
         this.followers = followers;
         this.follows = follows;
         this.name = name;
         this.userId = userId;
     }
 
-    public List<Follow> getFollowers() {
+    public List<Social> getFollowers() {
         return this.followers;
     }
 
-    public void setFollowers(List<Follow> followers) {
+    public void setFollowers(List<Social> followers) {
         this.followers = followers;
     }
 
-    public List<Follow> getFollows() {
+    public List<Social> getFollows() {
         return this.follows;
     }
 
-    public void setFollows(List<Follow> follows) {
+    public void setFollows(List<Social> follows) {
         this.follows = follows;
     }
 
