@@ -1,5 +1,6 @@
 package com.example.backendspringboot.Review;
 
+import com.example.backendspringboot.util.FirebaseTokenOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,14 @@ public class ReviewController {
     }
 
     @PostMapping(value = "/{tmdbMovieId}", produces = "application/json")
-    public Review createMovieReview(@PathVariable Integer tmdbMovieId, @RequestBody UserReview userReview) {
+    public Review createMovieReview(@PathVariable Integer tmdbMovieId, @RequestHeader(value = "Authorization") String token, @RequestBody UserReview userReview) {
+        String uid = null;
+        try {
+            uid = FirebaseTokenOperations.getUid(token.split(" ")[1]);
+        } catch (Exception e) {
+            return new Review();
+        }
+        userReview.setUserId(uid);
         Review review = reviewService.findByTmdbMovieId(tmdbMovieId);
         if (review == null)
             return reviewService.createReview(new Review(tmdbMovieId, List.of(userReview)));

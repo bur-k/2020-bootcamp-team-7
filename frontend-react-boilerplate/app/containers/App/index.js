@@ -8,15 +8,17 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import { Link, NavLink, Redirect, Route, Switch } from 'react-router-dom';
 
-// import HomePage from 'containers/HomePage/Loadable';
+import HomePage from 'containers/HomePage/Loadable';
+import Discover from 'containers/Discover/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import { Dropdown, Image, Nav, Navbar } from 'react-bootstrap';
 import firebase from 'firebase/app';
 import { StyledFirebaseAuth } from 'react-firebaseui/index';
 import styledFirebaseConfig from './styledFirebaseConfig';
+import MovieDetails from '../MovieDetails';
 
 export default function App() {
   const [isSignedIn, setSignedIn] = useState(false);
@@ -34,9 +36,19 @@ export default function App() {
   }, []);
 
   const getProfilePhoto = () => firebase.auth().currentUser.photoURL;
+  const routes = isSignedIn ? (
+    <Switch>
+      <Route path="/movie/:id" component={MovieDetails} />
+      <Route path="/discover" component={Discover} />
+      <Redirect exact from="/" to="/discover" />
+      <Route component={NotFoundPage} />
+    </Switch>
+  ) : (
+    <HomePage />
+  );
 
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <Navbar className="sticky-top" bg="dark" variant="dark">
         <NavLink className="navbar-brand" style={{ marginLeft: '3%' }} to="/">
           my-app
@@ -52,7 +64,7 @@ export default function App() {
                   justifyContent: 'center',
                 }}
               >
-                <NavLink className="nav-link" to="/Discover">
+                <NavLink className="nav-link" to="/discover">
                   Discover{''}
                 </NavLink>
               </Nav>
@@ -60,11 +72,7 @@ export default function App() {
                 <Dropdown.Toggle variant="light">
                   <Image
                     style={{ maxHeight: '30px' }}
-                    src={firebase.auth().currentUser.photoURL}
-                    onError={e => {
-                      e.target.onerror = null;
-                      e.target.src = { getProfilePhoto };
-                    }}
+                    src={getProfilePhoto()}
                     rounded
                   />{' '}
                   <span>{firebase.auth().currentUser.displayName}</span>
@@ -86,19 +94,18 @@ export default function App() {
             </>
           ) : (
             <StyledFirebaseAuth
-              uiConfig={styledFirebaseConfig}
+              uiConfig={{
+                ...styledFirebaseConfig,
+                callbacks: {
+                  signInSuccessWithAuthResult: e => console.log(e),
+                },
+              }}
               firebaseAuth={firebase.auth()}
             />
           )}
         </Navbar.Collapse>
       </Navbar>
-
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
+      {routes}
     </div>
   );
 }
-
-const HomePage = () => <div>this is homepage</div>;
