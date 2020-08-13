@@ -1,13 +1,11 @@
 package com.example.backendspringboot.User;
 
-import com.example.backendspringboot.Movie.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/users")
 @RestController
 public class UserController  {
 
@@ -15,13 +13,17 @@ public class UserController  {
     private  UserService userService;
 
     @PostMapping(produces = "application/json")
-    public void createUser(@RequestBody User user){
+    public User createUser(@RequestBody User user){
         userService.createUser(user);
+        User user1 = userService.findUserByUserId(user.getUserId());
+        if (user1 == null)
+        user = userService.createUser(user);
+        return user;
     }
 
     @GetMapping(produces = "application/json")
-    public List<User> getAllUser() {
-        return userService.getAllUser();
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
 }

@@ -2,15 +2,35 @@ package com.example.backendspringboot.User;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.springframework.data.annotation.Id;
+
 public class User  {
+    @Id
+    @JsonProperty("id")
     public String userId;
+
+    @JsonProperty("uname") 
+    public String userDisplayName;
+
+    @JsonProperty("uemail") 
+    public String userEmail;
+
+    @JsonProperty("ubio") 
     public String bio;
+
+    @JsonProperty("uphoto")
     public String profilePhoto;
+
+    @JsonProperty("ubirthday")
     public String birthday;
+
+    @JsonProperty("unationality")
     public String nationality;
 
-    public User(@JsonProperty("id") String userId, @JsonProperty("bio") String bio, @JsonProperty("photo")String profilePhoto, @JsonProperty("birthday")String birthday, @JsonProperty("nationality")String nationality) {
+    public User(String userId, String userDisplayName, String userEmail, String bio, String profilePhoto, String birthday, String nationality) {
         this.userId = userId;
+        this.userDisplayName = userDisplayName;
+        this.userEmail = userEmail;
         this.bio = bio;
         this.profilePhoto = profilePhoto;
         this.birthday = birthday;
@@ -23,6 +43,22 @@ public class User  {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public void setUserDisplayName(String userDisplayName) {
+        this.userDisplayName = userDisplayName;
+    }
+
+    public String getUserDisplayName() {
+        return userDisplayName;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
     }
 
     public String getBio() {

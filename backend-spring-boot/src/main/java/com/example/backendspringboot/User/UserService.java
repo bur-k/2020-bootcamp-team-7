@@ -9,9 +9,8 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    private User user;
 
-   // @Autowired
+    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -20,7 +19,11 @@ public class UserService {
         return  userRepository.insert(user);
     }
 
-    List<User> getAllUser() {
+    User findUserByUserId(String id) {
+        return userRepository.findUserByUserId(id);
+    }
+
+    List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
