@@ -3,6 +3,10 @@ package com.example.backendspringboot.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.backendspringboot.Review.Review;
+import com.example.backendspringboot.Review.UserReview;
+import com.example.backendspringboot.util.FirebaseTokenOperations;
+
 import java.util.List;
 
 @RequestMapping("/api/users")
@@ -25,5 +29,20 @@ public class UserController  {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+    
+    @GetMapping(produces = "application/json")
+    public User getUser(@RequestHeader(value = "Authorization") String token) {
+        String uid = null;
+        try {
+            uid = FirebaseTokenOperations.getUid(token.split(" ")[1]);
+        } catch (Exception e) {
+            return new User();
+        };
+        
+        return userService.findUserByUserId(uid);
+    }
+    
+    
+
 
 }
