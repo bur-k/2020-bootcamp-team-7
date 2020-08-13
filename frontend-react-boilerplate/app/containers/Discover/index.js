@@ -45,7 +45,7 @@ export function Discover({ movies, page, onLoadDiscover }) {
             md={4}
             lg={3}
             xl={2}
-            style={{ margin: '5px 0px' }}
+            style={{ margin: '5px 0px', padding: '0px 10px' }}
           >
             <MovieCard movie={m} />
           </Col>,
