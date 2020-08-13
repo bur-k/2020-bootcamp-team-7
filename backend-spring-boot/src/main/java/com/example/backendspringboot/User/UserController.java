@@ -24,11 +24,11 @@ public class UserController  {
         user = userService.createUser(user);
         return user;
     }
-
-    @GetMapping(produces = "application/json")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
+//
+//    @GetMapping(produces = "application/json")
+//    public List<User> getAllUsers() {
+//        return userService.getAllUsers();
+//    }
     
     @GetMapping(produces = "application/json")
     public User getUser(@RequestHeader(value = "Authorization") String token) {

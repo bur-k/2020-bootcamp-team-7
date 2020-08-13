@@ -27,6 +27,8 @@ public class User  {
     @JsonProperty("unationality")
     public String nationality;
 
+    public User() {}
+
     public User(String userId, String userDisplayName, String userEmail, String bio, String profilePhoto, String birthday, String nationality) {
         this.userId = userId;
         this.userDisplayName = userDisplayName;

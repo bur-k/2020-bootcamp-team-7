@@ -12,7 +12,6 @@ import {
 } from './constants';
 
 export const initialState = {
-  uid: null,
   user: null,
 };
 
@@ -23,7 +22,6 @@ const accountReducer = (state = initialState, action) =>
       case DEFAULT_ACTION:
         break;
       case PULL_ACCOUNT:
-        draft.id = action.id;
         break;
       case PULL_ACCOUNT_SUCCESS:
         draft.user = action.user;

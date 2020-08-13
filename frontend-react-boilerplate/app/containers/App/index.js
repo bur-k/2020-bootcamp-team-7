@@ -12,6 +12,7 @@ import { Link, NavLink, Redirect, Route, Switch } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import Discover from 'containers/Discover/Loadable';
+import MyAccount from 'containers/MyAccount/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import { Dropdown, Image, Nav, Navbar } from 'react-bootstrap';
@@ -40,6 +41,7 @@ export default function App() {
     <Switch>
       <Route path="/movie/:id" component={MovieDetails} />
       <Route path="/discover" component={Discover} />
+      <Route path="/myAccount" component={MyAccount} />
       <Redirect exact from="/" to="/discover" />
       <Route component={NotFoundPage} />
     </Switch>

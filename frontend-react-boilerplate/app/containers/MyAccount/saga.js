@@ -1,11 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { PULL_MOVIE, PULL_REVIEW, PUSH_REVIEW } from './constants';
-import { makeSelectId, makeSelectUserReview } from './selectors';
+import { PULL_ACCOUNT } from './constants';
 import request from '../../utils/request';
-import {
-  pullAccountError,
-  pullAccountSuccess,
-} from './actions';
+import { pullAccountError, pullAccountSuccess } from './actions';
 
 // Individual exports for testing
 export default function* userDetailsSaga() {
@@ -14,8 +10,7 @@ export default function* userDetailsSaga() {
 }
 
 function* getUser() {
-  const uid = yield select(makeSelectId());
-  const url = `http://localhost:8080/account/${uid}`;
+  const url = 'http://localhost:8080/api/users';
   const options = { method: 'GET' };
   try {
     const user = yield call(request, url, options);
@@ -24,4 +19,3 @@ function* getUser() {
     yield put(pullAccountError(error));
   }
 }
-
