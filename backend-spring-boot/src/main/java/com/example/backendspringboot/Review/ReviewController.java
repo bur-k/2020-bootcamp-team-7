@@ -1,5 +1,6 @@
 package com.example.backendspringboot.Review;
 
+import com.example.backendspringboot.User.UserService;
 import com.example.backendspringboot.util.FirebaseTokenOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +11,12 @@ import java.util.List;
 @RequestMapping("api/reviews")
 public class ReviewController {
     private final ReviewService reviewService;
+    private final UserService userService;
 
     @Autowired
-    ReviewController(ReviewService reviewService) {
+    ReviewController(ReviewService reviewService, UserService userService) {
         this.reviewService = reviewService;
+        this.userService = userService;
     }
 
     @PostMapping(value = "/{tmdbMovieId}", produces = "application/json")
@@ -25,6 +28,7 @@ public class ReviewController {
             return new Review();
         }
         userReview.setUserId(uid);
+        userReview.setUserName(userService.findUserByUserId(uid).getUserDisplayName());
         Review review = reviewService.findByTmdbMovieId(tmdbMovieId);
         if (review == null)
             return reviewService.createReview(new Review(tmdbMovieId, List.of(userReview)));

@@ -16,6 +16,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 import {
   Accordion,
   Badge,
+  Alert,
   Button,
   Card,
   Col,
@@ -25,6 +26,7 @@ import {
   NavLink,
   Row,
   Table,
+  Toast,
 } from 'react-bootstrap';
 import makeSelectMovieDetails, {
   makeSelectId,
@@ -54,7 +56,11 @@ export function MovieDetails({
     onLoadReview(id);
   }, []);
 
-  const [_userReview, setUserReview] = useState({});
+  const [_userReview, setUserReview] = useState({
+    review: '',
+    reviewTitle: '',
+    score: 5,
+  });
 
   const { id } = useParams();
   const reviewList =
@@ -64,8 +70,7 @@ export function MovieDetails({
           <>
             <Form.Group controlId="exampleForm.ControlTextarea1">
               <Form.Label>
-                {/* @{rev.userId} says */}
-                {rev.reviewTitle}
+                @{rev.userName}: {rev.reviewTitle}
               </Form.Label>
               <Form.Control as="textarea" rows="3" readOnly>
                 {rev.review}
@@ -194,6 +199,11 @@ export function MovieDetails({
                       onSubmit={e => {
                         e.preventDefault();
                         onSubmitReview(_userReview);
+                        setUserReview({
+                          review: '',
+                          reviewTitle: '',
+                          score: 5,
+                        });
                       }}
                     >
                       <Form.Group controlId="exampleForm.ControlInput1">
@@ -201,12 +211,14 @@ export function MovieDetails({
                         <Form.Control
                           type="input"
                           placeholder="Title"
+                          value={_userReview.reviewTitle}
                           onChange={e => {
                             setUserReview({
                               ..._userReview,
                               reviewTitle: e.target.value,
                             });
                           }}
+                          required
                         />
                       </Form.Group>
                       <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -214,18 +226,21 @@ export function MovieDetails({
                         <Form.Control
                           as="textarea"
                           rows="3"
+                          value={_userReview.review}
                           onChange={e => {
                             setUserReview({
                               ..._userReview,
                               review: e.target.value,
                             });
                           }}
+                          required
                         />
                       </Form.Group>
                       <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Rate Movie</Form.Label>
                         <Form.Control
                           as="select"
+                          value={_userReview.score}
                           onChange={e => {
                             setUserReview({
                               ..._userReview,

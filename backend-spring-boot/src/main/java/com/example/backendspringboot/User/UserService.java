@@ -19,7 +19,7 @@ public class UserService {
         return  userRepository.insert(user);
     }
 
-    User findUserByUserId(String id) {
+    public User findUserByUserId(String id) {
         return userRepository.findUserByUserId(id);
     }
 
