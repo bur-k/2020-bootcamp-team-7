@@ -1,5 +1,6 @@
 package com.example.backendspringboot.User;
 
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.springframework.data.annotation.Id;
@@ -26,6 +27,9 @@ public class User  {
 
     @JsonProperty("unationality")
     public String nationality;
+
+    public List<String> watchList;
+    public List<String> watchedList;
 
     public User() {}
 
@@ -93,5 +97,21 @@ public class User  {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public List<String> getWatchList() {
+        return watchList;
+    }
+
+    public void setWatchList(List<String> watchList) {
+        this.watchList = watchList;
+    }
+
+    public List<String> getWatchedList() {
+        return watchedList;
+    }
+
+    public void setWatchedList(List<String> watchedList) {
+        this.watchedList = watchedList;
     }
 }
