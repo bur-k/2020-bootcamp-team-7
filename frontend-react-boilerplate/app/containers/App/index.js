@@ -20,6 +20,7 @@ import firebase from 'firebase/app';
 import { StyledFirebaseAuth } from 'react-firebaseui/index';
 import styledFirebaseConfig from './styledFirebaseConfig';
 import MovieDetails from '../MovieDetails';
+import { checkAccount } from '../MyAccount/actions';
 
 export default function App() {
   const [isSignedIn, setSignedIn] = useState(false);
@@ -42,7 +43,7 @@ export default function App() {
       <Route path="/movie/:id" component={MovieDetails} />
       <Route path="/discover" component={Discover} />
       <Route path="/myAccount" component={MyAccount} />
-      <Redirect exact from="/" to="/discover" />
+      <Redirect exact from="/" to="/myAccount" />
       <Route component={NotFoundPage} />
     </Switch>
   ) : (
@@ -99,7 +100,10 @@ export default function App() {
               uiConfig={{
                 ...styledFirebaseConfig,
                 callbacks: {
-                  signInSuccessWithAuthResult: e => console.log(e),
+                  signInSuccessWithAuthResult: e => {
+                    global.e = e;
+                    console.log(e);
+                  },
                 },
               }}
               firebaseAuth={firebase.auth()}
