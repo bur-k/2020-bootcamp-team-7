@@ -30,20 +30,19 @@ public class UserController  {
 //    public List<User> getAllUsers() {
 //        return userService.getAllUsers();
 //    }
-    /*
+
     @GetMapping(produces = "application/json")
-    public User getUser(@RequestHeader(value = "Authorization") String token) {
+    public User getCurrentUser(@RequestHeader(value = "Authorization") String token) {
         String uid = null;
         try {
             uid = FirebaseTokenOperations.getUid(token.split(" ")[1]);
         } catch (Exception e) {
             return new User();
         };
-        
+
         return userService.findUserByUserId(uid);
     }
-    */
-    
+
     @GetMapping(value = "/{id}", produces = "application/json")
     public User getUser(@PathVariable String id) {
         return userService.findUserByUserId(id);
