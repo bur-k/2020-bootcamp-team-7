@@ -5,7 +5,7 @@
  */
 
 import React, { memo, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -16,7 +16,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import {
   Accordion,
   Badge,
-  Alert,
   Button,
   Card,
   Col,
@@ -26,7 +25,6 @@ import {
   NavLink,
   Row,
   Table,
-  Toast,
 } from 'react-bootstrap';
 import makeSelectMovieDetails, {
   makeSelectId,
@@ -70,7 +68,8 @@ export function MovieDetails({
           <>
             <Form.Group controlId="exampleForm.ControlTextarea1">
               <Form.Label>
-                @{rev.userName}: {rev.reviewTitle}
+                <Link to={`/user/${rev.userId}`}>{rev.userName}</Link> :{' '}
+                {rev.reviewTitle}
               </Form.Label>
               <Form.Control as="textarea" rows="3" readOnly>
                 {rev.review}
@@ -78,7 +77,7 @@ export function MovieDetails({
             </Form.Group>
             <hr />
           </>
-        ));
+      ));
   const _movie =
     movie === null ? null : (
       <>

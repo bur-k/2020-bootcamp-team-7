@@ -21,6 +21,7 @@ import { StyledFirebaseAuth } from 'react-firebaseui/index';
 import styledFirebaseConfig from './styledFirebaseConfig';
 import MovieDetails from '../MovieDetails';
 import request from '../../utils/request';
+import UserDetails from '../UserDetails';
 
 export default function App() {
   const [isSignedIn, setSignedIn] = useState(false);
@@ -41,6 +42,7 @@ export default function App() {
   const routes = isSignedIn ? (
     <Switch>
       <Route path="/movie/:id" component={MovieDetails} />
+      <Route path="/user/:id" component={UserDetails} />
       <Route path="/discover" component={Discover} />
       <Route path="/myAccount" component={MyAccount} />
       <Redirect exact from="/" to="/discover" />
