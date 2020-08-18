@@ -12,7 +12,7 @@ import {
 } from './constants';
 
 export const initialState = {
-  user: null,
+  data: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -22,6 +22,7 @@ const accountReducer = (state = initialState, action) =>
       case DEFAULT_ACTION:
         break;
       case PULL_ACCOUNT:
+        draft.data = null;
         break;
       case PULL_ACCOUNT_SUCCESS:
         draft.data = action.data;

@@ -27,16 +27,19 @@ export function UserDetails({ onLoadUser, data }) {
     onLoadUser();
   }, []);
 
+  const userData =
+    data.data == null ? null : (
+      <Image
+        className="profile-pic"
+        variant="top"
+        src={data.data.uphoto}
+        style={{ width: '30%', height: '30%' }}
+      />
+    );
+
   return (
     <div style={{ height: '100%' }}>
-      <div className="container-center">
-        <Image
-          className="profile-pic"
-          variant="top"
-          src={data.data.uphoto}
-          style={{ width: '30%', height: '30%' }}
-        />
-      </div>
+      <div className="container-center">{userData}</div>
       <Card
         style={{
           width: '80%',
