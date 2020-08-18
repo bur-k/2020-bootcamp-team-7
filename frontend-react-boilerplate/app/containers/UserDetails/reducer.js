@@ -11,7 +11,9 @@ import {
   PULL_USER_SUCCESS,
 } from './constants';
 
-export const initialState = {};
+export const initialState = {
+  user: null,
+};
 
 /* eslint-disable default-case, no-param-reassign */
 const userDetailsReducer = (state = initialState, action) =>
