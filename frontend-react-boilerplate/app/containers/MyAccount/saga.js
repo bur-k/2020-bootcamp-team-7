@@ -1,19 +1,14 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { PULL_ACCOUNT } from './constants';
 import request from '../../utils/request';
 import { pullAccountError, pullAccountSuccess } from './actions';
-import makeSelectUserDetails from './selectors';
 
 function* getUserAccount() {
-  const userData = yield select(makeSelectUserDetails());
+  const url = 'http://localhost:8080/api/users';
   const options = { method: 'GET' };
   try {
     const response = yield call(request, url, options);
-    if (response) {
-      yield put(pullAccountSuccess(response));
-    } else {
-      yield put(pullAccountError(response));
-    }
+    yield put(pullAccountSuccess(response));
   } catch (error) {
     yield put(pullAccountError(error));
   }

@@ -24,18 +24,8 @@ const makeSelectUserDetails = () =>
 const makeSelectUser = () =>
   createSelector(
     selectUserDetailsDomain,
-    substate => substate.user,
-  );
-
-const makeSelectUid = () =>
-  createSelector(
-    selectUserDetailsDomain,
-    substate => substate.uid,
+    substate => substate.data,
   );
 
 export default makeSelectUserDetails;
-export {
-  selectUserDetailsDomain,
-  makeSelectUser,
-  makeSelectUid,
-};
+export { selectUserDetailsDomain, makeSelectUser };

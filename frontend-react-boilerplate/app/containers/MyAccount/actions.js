@@ -16,10 +16,9 @@ export function defaultAction() {
     type: DEFAULT_ACTION,
   };
 }
-export function pullAccount(data) {
+export function pullAccount() {
   return {
     type: PULL_ACCOUNT,
-    data,
   };
 }
 export function pullAccountSuccess(data) {

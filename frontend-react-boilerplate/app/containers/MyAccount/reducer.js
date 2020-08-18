@@ -22,16 +22,11 @@ const accountReducer = (state = initialState, action) =>
       case DEFAULT_ACTION:
         break;
       case PULL_ACCOUNT:
-        // draft.userId = action.userId;
-        draft.getUserData = action.data;
         break;
       case PULL_ACCOUNT_SUCCESS:
-        // draft.userData = action.data;
-        draft.getUserResponse = action.data;
+        draft.data = action.data;
         break;
       case PULL_ACCOUNT_ERROR:
-        // draft.error = action.error;
-        draft.getUserError = action.error;
         break;
     }
   });

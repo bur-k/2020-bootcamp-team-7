@@ -19,12 +19,12 @@ import saga from './saga';
 import { pullAccount } from './actions';
 import './style.css';
 
-export function UserDetails({ onLoadUser }) {
+export function UserDetails({ onLoadUser, data }) {
   useInjectReducer({ key: 'userDetails', reducer });
   useInjectSaga({ key: 'userDetails', saga });
 
   useEffect(() => {
-    onLoadUser(global);
+    onLoadUser();
   }, []);
 
   return (
@@ -33,7 +33,7 @@ export function UserDetails({ onLoadUser }) {
         <Image
           className="profile-pic"
           variant="top"
-          src={`${onLoadUser.profilePhoto}`}
+          src={data.data.uphoto}
           style={{ width: '30%', height: '30%' }}
         />
       </div>
@@ -66,12 +66,12 @@ export function UserDetails({ onLoadUser }) {
 
 UserDetails.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  user: PropTypes.object,
+  data: PropTypes.object,
   onLoadUser: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  userDetails: makeSelectUserDetails(),
+  data: makeSelectUserDetails(),
 });
 
 function mapDispatchToProps(dispatch) {
