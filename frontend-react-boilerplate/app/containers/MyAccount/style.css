@@ -1,0 +1,12 @@
+.container-center {
+    text-align: center;
+    display: block;
+}
+.profile-pic {
+    width: 300px !important;
+    height: 300px !important;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: gray;
+    margin-top:40px;
+}
