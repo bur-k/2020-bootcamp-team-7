@@ -2,15 +2,17 @@ package com.example.backendspringboot.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import com.example.backendspringboot.Movie.Movie;
 import com.example.backendspringboot.Review.Review;
 import com.example.backendspringboot.Review.UserReview;
 import com.example.backendspringboot.util.FirebaseTokenOperations;
 
 import java.util.List;
 
-@RequestMapping("/api/users")
 @RestController
+@RequestMapping("api/users")
 public class UserController  {
 
     @Autowired
@@ -18,10 +20,9 @@ public class UserController  {
 
     @PostMapping(produces = "application/json")
     public User createUser(@RequestBody User user){
-        userService.createUser(user);
         User user1 = userService.findUserByUserId(user.getUserId());
         if (user1 == null)
-        user = userService.createUser(user);
+        	user = userService.createUser(user);
         return user;
     }
 //
@@ -29,7 +30,7 @@ public class UserController  {
 //    public List<User> getAllUsers() {
 //        return userService.getAllUsers();
 //    }
-    
+    /*
     @GetMapping(produces = "application/json")
     public User getUser(@RequestHeader(value = "Authorization") String token) {
         String uid = null;
@@ -41,8 +42,11 @@ public class UserController  {
         
         return userService.findUserByUserId(uid);
     }
+    */
     
-    
-
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public User getUser(@PathVariable String id) {
+        return userService.findUserByUserId(id);
+    }
 
 }
