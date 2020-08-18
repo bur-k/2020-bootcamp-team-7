@@ -20,7 +20,7 @@ import firebase from 'firebase/app';
 import { StyledFirebaseAuth } from 'react-firebaseui/index';
 import styledFirebaseConfig from './styledFirebaseConfig';
 import MovieDetails from '../MovieDetails';
-import { checkAccount } from '../MyAccount/actions';
+import request from '../../utils/request';
 
 export default function App() {
   const [isSignedIn, setSignedIn] = useState(false);
@@ -43,7 +43,7 @@ export default function App() {
       <Route path="/movie/:id" component={MovieDetails} />
       <Route path="/discover" component={Discover} />
       <Route path="/myAccount" component={MyAccount} />
-      <Redirect exact from="/" to="/myAccount" />
+      <Redirect exact from="/" to="/discover" />
       <Route component={NotFoundPage} />
     </Switch>
   ) : (
@@ -87,7 +87,7 @@ export default function App() {
                   <Dropdown.Divider />
                   <Link
                     className="dropdown-item"
-                    to="#/sign-out"
+                    to="#"
                     onClick={() => firebase.auth().signOut()}
                   >
                     Sign Out
@@ -101,8 +101,25 @@ export default function App() {
                 ...styledFirebaseConfig,
                 callbacks: {
                   signInSuccessWithAuthResult: e => {
-                    global.e = e;
-                    console.log(e);
+                    if (e.additionalUserInfo.isNewUser) {
+                      const userData = {
+                        id: e.user.uid,
+                        uname: e.additionalUserInfo.profile.name,
+                        uemail: e.additionalUserInfo.profile.email,
+                        uphoto: e.additionalUserInfo.profile.picture,
+                      };
+
+                      const options = {
+                        method: 'POST',
+                        headers: {
+                          Accept: 'application/json',
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ ...userData }),
+                      };
+
+                      request('http://localhost:8080/api/users', options);
+                    }
                   },
                 },
               }}
