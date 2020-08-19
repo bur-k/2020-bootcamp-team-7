@@ -24,18 +24,23 @@ function* getUserAccount() {
 
 function* updateUserAccountBio() {
   const user = yield select(makeSelectUser());
-  const body = user.ubio;
+  const userId = user.data.id;
+  const userBio = user.data.bio;
   const url = `http://localhost:8080/api/users/${user.data.id}`;
+  const body = {
+    id: userId,
+    ubio: userBio,
+  }
   const options = {
     method: 'PUT',
+    mode: 'CORS',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      ...body,
-    }),
+    body: JSON.stringify(body),
   };
+
   try {
     const bio = yield call(request, url, options);
     yield put(updateBioSuccess(bio));

@@ -16,15 +16,20 @@ import {
   Button,
   Card,
   Form,
-  FormControl,
   Image,
-  InputGroup,
+  Table
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { FormattedMessage } from 'react-intl';
+
 import makeSelectUserDetails, { makeSelectUser } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { pullAccount, updateBio } from './actions';
 import './style.css';
+
+<script crossorigin src="..."></script>
 
 export function UserDetails({ onLoadUser, data, onChangeBio }) {
   useInjectReducer({ key: 'userDetails', reducer });
@@ -35,53 +40,56 @@ export function UserDetails({ onLoadUser, data, onChangeBio }) {
   }, []);
 
   const [_userBio, setUserBio] = useState({
-    bio: '',
+    bio: data.data == null ? '' : data.data.ubio,
     id: '',
   });
 
   const userData =
     data.data == null ? null : (
-      <Image
-        className="profile-pic"
-        variant="top"
-        src={data.data.uphoto}
-        style={{ width: '30%', height: '30%' }}
-      />
-    );
+      <>
+      <Helmet>
+        <title>My Account: {data.data.uname}</title>
+        <meta name="description" content="Description of UserDetails" />
+      </Helmet>
+        <div classname="profile-container">
+    <div classname="card-container">
+        <div className="card-header">
+        </div>
+        <div className="container-center">
+        <Image src={`${data.data.uphoto}`} className="img-custom profile-pic" circle />
 
-  return (
-    <div style={{ height: '100%' }}>
-      <div className="container-center">{userData}</div>
-      <Card
-        style={{
-          width: '80%',
-          height: '100%',
-          marginRight: 'auto',
-          marginLeft: 'auto',
-          marginTop: '-10%',
-        }}
-      >
-        <Card.Body>
-          <div style={{ width: '30%', height: '70%', zIndex: '0' }}>
-            <InputGroup>
-              <InputGroup.Prepend>
-                <InputGroup.Text>BIO</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl as="textarea" aria-label="With textarea">
-                hello
-              </FormControl>
-            </InputGroup>
-            <Form
+        </div>
+        <div className="card-body">
+          <h3>{}</h3>
+          <h4>
+          
+          </h4>
+          <p><Link to={`/user/${data.data.id}`}>Click to see Public Profile</Link> </p>
+          <p>{}</p>
+
+          <Table>
+            <thead>
+              <tr>
+                <th><b>user name:</b> </th>
+                <th><b>user e-mail:</b> </th>
+                <th>FOLLOWERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{data.data.uname}</td>
+                <td>{data.data.uemail}</td>
+                <td>{}</td>
+              </tr>
+            </tbody>
+          </Table>
+          <Form
               onSubmit={e => {
                 e.preventDefault();
                 onChangeBio(_userBio);
-                setUserBio({
-                  bio: '',
-                  id: '',
-                });
               }}
             >
-              <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Group>
                 <Form.Label>BIO</Form.Label>
                 <Form.Control
                   as="textarea"
@@ -100,9 +108,15 @@ export function UserDetails({ onLoadUser, data, onChangeBio }) {
 
               <Button type="submit">Update Bio</Button>
             </Form>
-          </div>
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
+</div>
+      </>
+    );
+
+  return (
+    <div style={{ height: '100%' }}>
+      <div className="container-center">{userData}</div>
     </div>
   );
 }

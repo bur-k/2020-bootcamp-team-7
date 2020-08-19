@@ -56,7 +56,7 @@ public class UserController  {
     }
     
     @PutMapping(value = "/{id}", produces = "application/json")
-    public User changeUserBio(@PathVariable String id, @RequestBody String bio) {
+    public User updateUserAccountBio(@PathVariable String id, @RequestBody String bio) {
     	User user1 = getUser(id);
     	user1.setBio(bio);
     	userService.save(user1);

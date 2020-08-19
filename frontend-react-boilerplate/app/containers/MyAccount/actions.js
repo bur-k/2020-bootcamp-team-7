@@ -37,9 +37,10 @@ export function pullAccountError(error) {
   };
 }
 
-export function updateBio() {
+export function updateBio(data) {
   return {
     type: UPDATE_BIO,
+    data,
   };
 }
 export function updateBioSuccess(data) {
