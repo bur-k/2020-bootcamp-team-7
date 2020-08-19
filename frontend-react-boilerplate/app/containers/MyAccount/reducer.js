@@ -9,6 +9,9 @@ import {
   PULL_ACCOUNT,
   PULL_ACCOUNT_ERROR,
   PULL_ACCOUNT_SUCCESS,
+  UPDATE_BIO,
+  UPDATE_BIO_ERROR,
+  UPDATE_BIO_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -28,6 +31,14 @@ const accountReducer = (state = initialState, action) =>
         draft.data = action.data;
         break;
       case PULL_ACCOUNT_ERROR:
+        break;
+      case UPDATE_BIO:
+        draft.data = action.data;
+        break;
+      case UPDATE_BIO_SUCCESS:
+        draft.data = action.data;
+        break;
+      case UPDATE_BIO_ERROR:
         break;
     }
   });
