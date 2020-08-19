@@ -20,7 +20,7 @@ import {
   Image,
   InputGroup,
 } from 'react-bootstrap';
-import makeSelectUserDetails from './selectors';
+import makeSelectUserDetails, { makeSelectUser } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { pullAccount, updateBio } from './actions';
@@ -36,6 +36,7 @@ export function UserDetails({ onLoadUser, data, onChangeBio }) {
 
   const [_userBio, setUserBio] = useState({
     bio: '',
+    id: '',
   });
 
   const userData =
@@ -76,6 +77,7 @@ export function UserDetails({ onLoadUser, data, onChangeBio }) {
                 onChangeBio(_userBio);
                 setUserBio({
                   bio: '',
+                  id: '',
                 });
               }}
             >
@@ -89,6 +91,7 @@ export function UserDetails({ onLoadUser, data, onChangeBio }) {
                     setUserBio({
                       ..._userBio.bio,
                       bio: e.target.value,
+                      id: data.data.id,
                     });
                   }}
                   required
@@ -109,10 +112,12 @@ UserDetails.propTypes = {
   data: PropTypes.object,
   onLoadUser: PropTypes.func,
   onChangeBio: PropTypes.func,
+  _userBio: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   data: makeSelectUserDetails(),
+  _userBio: makeSelectUser(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -121,8 +126,8 @@ function mapDispatchToProps(dispatch) {
     onLoadUser: data => {
       dispatch(pullAccount(data));
     },
-    onChangeBio: data => {
-      dispatch(updateBio(data));
+    onChangeBio: _userBio => {
+      dispatch(updateBio(_userBio));
     },
   };
 }

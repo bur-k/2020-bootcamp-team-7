@@ -7,7 +7,7 @@ import {
   updateBioError,
   updateBioSuccess,
 } from './actions';
-import makeSelectUserDetails from './selectors';
+import  makeSelectUser from './selectors';
 
 function* getUserAccount() {
   const url = 'http://localhost:8080/api/users';
@@ -23,11 +23,11 @@ function* getUserAccount() {
 }
 
 function* updateUserAccountBio() {
-  const user = yield select(makeSelectUserDetails());
+  const user = yield select(makeSelectUser());
   const body = user.ubio;
-  const url = `http://localhost:8080/api/users/${user.id}`;
+  const url = `http://localhost:8080/api/users/${user.data.id}`;
   const options = {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
