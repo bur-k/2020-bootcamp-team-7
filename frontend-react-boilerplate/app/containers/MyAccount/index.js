@@ -12,7 +12,14 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import { Card, FormControl, Image, InputGroup, Form, Button } from 'react-bootstrap';
+import {
+  Button,
+  Card,
+  Form,
+  FormControl,
+  Image,
+  InputGroup,
+} from 'react-bootstrap';
 import makeSelectUserDetails from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -28,7 +35,7 @@ export function UserDetails({ onLoadUser, data, onChangeBio }) {
   }, []);
 
   const [_userBio, setUserBio] = useState({
-    bio: "",
+    bio: '',
   });
 
   const userData =
@@ -63,33 +70,33 @@ export function UserDetails({ onLoadUser, data, onChangeBio }) {
                 hello
               </FormControl>
             </InputGroup>
-<Form
-                      onSubmit={e => {
-                        e.preventDefault();
-                        onChangeBio(_userBio);
+            <Form
+              onSubmit={e => {
+                e.preventDefault();
+                onChangeBio(_userBio);
+                setUserBio({
+                  bio: '',
+                });
+              }}
+            >
+              <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label>BIO</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows="3"
+                  value={_userBio.bio}
+                  onChange={e => {
                     setUserBio({
-                      bio: '',
+                      ..._userBio.bio,
+                      bio: e.target.value,
                     });
-                      }}
-                    >
-                      <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>BIO</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          rows="3"
-                          value={_userBio.bio}
-                          onChange={e => {
-                            setUserBio({
-                              ..._userBio.bio,
-                              bio: e.target.value,
-                            });
-                          }}
-                          required
-                        />
-                      </Form.Group>
-                      
-                      <Button type="submit">Update Bio</Button>
-                    </Form>
+                  }}
+                  required
+                />
+              </Form.Group>
+
+              <Button type="submit">Update Bio</Button>
+            </Form>
           </div>
         </Card.Body>
       </Card>
@@ -101,7 +108,7 @@ UserDetails.propTypes = {
   dispatch: PropTypes.func.isRequired,
   data: PropTypes.object,
   onLoadUser: PropTypes.func,
-  onChangeBio: PropTypes.func
+  onChangeBio: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
