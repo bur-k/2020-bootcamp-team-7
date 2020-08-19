@@ -45,7 +45,23 @@ public class UserController  {
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public User getUser(@PathVariable String id) {
-        return userService.findUserByUserId(id);
-    }
+    	User user1 = null;
+        try {
+            user1 = userService.findUserByUserId(id);
+        } catch (Exception e) {
+            return new User();
+        };  
 
+        return user1;
+    }
+    
+    @PutMapping(value = "/{id}", produces = "application/json")
+    public User changeUserBio(@PathVariable String id, @RequestBody String bio) {
+    	User user1 = getUser(id);
+    	user1.setBio(bio);
+    	userService.save(user1);
+    	
+    	return user1;
+    }
+    
 }
