@@ -11,4 +11,7 @@ public interface MovieRepository extends MongoRepository<Movie, Integer> {
     Movie findMovieByTmdbMovieId(@Param("tmdbMovieId") Integer tmdbMovieId);
     List<Movie> getMoviesByTmdbMovieIdExists(boolean exists);
     void deleteMoviesByTmdbMovieIdExists(boolean exists);
+
+    @Override
+    Iterable<Movie> findAllById(Iterable<Integer> integers);
 }

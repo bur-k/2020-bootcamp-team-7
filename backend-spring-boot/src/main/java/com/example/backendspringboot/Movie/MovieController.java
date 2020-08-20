@@ -13,6 +13,12 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+
+    @GetMapping(value = "/watchlist", produces = "application/json")
+    public List<Movie> getWatchlist() {
+        return movieService.getWatchlist(List.of(475557, 385103, 587792));
+    }
+
     @GetMapping(value = "/{tmdbMovieId}", produces = "application/json")
     public Movie getMovie(@PathVariable Integer tmdbMovieId) {
         Movie movie = movieService.findMovieByTmdbMovieId(tmdbMovieId);

@@ -29,4 +29,9 @@ public class MovieService {
     List<Movie> getAllMovies(boolean exists) {
         return movieRepository.getMoviesByTmdbMovieIdExists(exists);
     }
+    List<Movie> getWatchlist(List<Integer> list) {
+        return (List<Movie>) movieRepository.findAllById(list);
+    }
+
+
 }

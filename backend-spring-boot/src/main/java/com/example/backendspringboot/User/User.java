@@ -28,8 +28,8 @@ public class User  {
     @JsonProperty("unationality")
     public String nationality;
 
-    public List<String> watchList;
-    public List<String> watchedList;
+    public List<Integer> watchList;
+    public List<Integer> watchedList;
 
     public User() {}
 
@@ -99,19 +99,19 @@ public class User  {
         this.nationality = nationality;
     }
 
-    public List<String> getWatchList() {
+    public List<Integer> getWatchList() {
         return watchList;
     }
 
-    public void setWatchList(List<String> watchList) {
+    public void setWatchList(List<Integer> watchList) {
         this.watchList = watchList;
     }
 
-    public List<String> getWatchedList() {
+    public List<Integer> getWatchedList() {
         return watchedList;
     }
 
-    public void setWatchedList(List<String> watchedList) {
+    public void setWatchedList(List<Integer> watchedList) {
         this.watchedList = watchedList;
     }
 }
