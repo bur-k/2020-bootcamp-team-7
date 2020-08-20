@@ -75,6 +75,12 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                     <th>
                       <b>watched list</b>
                     </th>
+                    <th>
+                      <b>following</b>
+                    </th>
+                    <th>
+                      <b>followers</b>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -96,6 +102,26 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                         <>
                           <span>
                             <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                          </span>
+                          <br />
+                        </>
+                      ))}
+                    </td>
+                    <td>
+                    {user.social.following.map(c => (
+                        <>
+                          <span>
+                            <Link to={`/user/${c.id}`}>{c.name}</Link>
+                          </span>
+                          <br />
+                        </>
+                      ))}
+                    </td>
+                    <td>
+                    {user.social.followers.map(c => (
+                        <>
+                          <span>
+                            <Link to={`/user/${c.id}`}>{c.name}</Link>
                           </span>
                           <br />
                         </>

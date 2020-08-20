@@ -23,7 +23,10 @@ function* getUserAccount() {
     const url3 = `http://localhost:8080/api/movies/watchedlist/${response1.id}`;
     const response3 = yield call(request, url3, options);
 
-    const responses = { ...response1, toWatchMovies: response2, watchedMovies: response3 };
+    const url4 = `http://localhost:8080/api/social/${response1.id}`;
+    const response4 = yield call(request, url4, options);
+
+    const responses = { ...response1, toWatchMovies: response2, watchedMovies: response3, social: response4 };
 
     yield put(pullAccountSuccess(responses));
   } catch (error) {
