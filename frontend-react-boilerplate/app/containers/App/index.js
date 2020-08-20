@@ -55,8 +55,8 @@ export default function App() {
   return (
     <div style={{ height: '100%' }}>
       <Navbar className="sticky-top" bg="dark" variant="dark">
-        <NavLink className="navbar-brand" style={{ marginLeft: '3%' }} to="/">
-          my-app
+        <NavLink className="navbar-brand" style={{ marginLeft: '3%', fontSize: '30px', fontFamily: 'monospace' }} to="/">
+          kimneizlio
         </NavLink>
         <Navbar.Collapse className="justify-content-end">
           {isSignedIn ? (
