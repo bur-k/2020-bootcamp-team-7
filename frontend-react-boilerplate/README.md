@@ -1,12 +1,14 @@
 ## Quick start
 
-1.  npm i
-2.  npm start
+1.  cd frontend-react-boilerplate
+2.  npm i
+3.  npm start
+4.  http://localhost:3000
 
 ## Pages
 
-1. HomePage
-> A page to let users login  
+### 1. HomePage
+#### A page to let users login   
 ![Image of Sign in with Google component](https://i.imgur.com/muxF8gs.png)
 ```
 <StyledFirebaseAuth
@@ -42,8 +44,8 @@
   </Card.Footer>
 </Card>
 ```  
-2. Discover
-> Listing page which lists movies so users can discover movies and/or add them into lists  
+### 2. Discover
+#### Listing page which lists movies so users can discover movies and/or add them into lists  
 ![Image of a MovieCard](https://i.imgur.com/FmTzeMV.png)
 ```
 <Card style={{ height: '100%' }}>
@@ -65,8 +67,8 @@
   </Card.Footer>
 </Card>
 ```  
-3. MovieDetails
-> This page includes information about selected movie and allows user to make review and view other user's reviews  
+### 3. MovieDetails
+#### This page includes information about selected movie and allows user to make review and view other user's reviews  
 ![Image of a MovieDetails](https://i.imgur.com/bJIwOMb.png)
 ```
 <Row>
@@ -207,7 +209,7 @@
   </Card>
 </Accordion>
 ```  
-4. UserDetails
-> Details of selected user be shown, also users can follow other users on this page  
-5. MyAccount
-> Users can customize their account using this page
+### 4. UserDetails
+#### Details of selected user be shown, also users can follow other users on this page  
+### 5. MyAccount
+#### Users can customize their account using this page
