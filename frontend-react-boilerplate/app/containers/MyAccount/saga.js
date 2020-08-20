@@ -1,4 +1,4 @@
-import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { PULL_ACCOUNT, UPDATE_BIO } from './constants';
 import request from '../../utils/request';
 import {
@@ -10,13 +10,22 @@ import {
 import makeSelectUser from './selectors';
 
 function* getUserAccount() {
-  const url = 'http://localhost:8080/api/users';
-  const options = {
-    method: 'GET',
-  };
   try {
-    const response = yield call(request, url, options);
-    yield put(pullAccountSuccess(response));
+    const url1 = 'http://localhost:8080/api/users';
+    const options1 = {
+      method: 'GET',
+    };
+    const response1 = yield call(request, url1, options1);
+
+    const url2 = `http://localhost:8080/api/movies/watchlist/${response1.id}`;
+    const options2 = {
+      method: 'GET',
+    };
+
+    const response2 = yield call(request, url2, options2);
+    const responses = { ...response1, movies: response2 };
+
+    yield put(pullAccountSuccess(responses));
   } catch (error) {
     yield put(pullAccountError(error));
   }
@@ -24,20 +33,15 @@ function* getUserAccount() {
 
 function* updateUserAccountBio() {
   const user = yield select(makeSelectUser());
-  const userId = user.data.id;
-  const userBio = user.data.bio;
   const url = `http://localhost:8080/api/users/${user.data.id}`;
-  const body = {
-    id: userId,
-    ubio: userBio,
-  };
+
   const options = {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body),
+    body: user.data.bio,
   };
 
   try {

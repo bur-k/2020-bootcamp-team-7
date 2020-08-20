@@ -5,7 +5,7 @@ import { initialState } from './reducer';
  * Direct selector to the userDetails state domain
  */
 
-const selectUserDetailsDomain = state => state.userDetails || initialState;
+const selectMyAccountDomain = state => state.myAccount || initialState;
 
 /**
  * Other specific selectors
@@ -15,17 +15,17 @@ const selectUserDetailsDomain = state => state.userDetails || initialState;
  * Default selector used by MyAccount
  */
 
-const makeSelectUserDetails = () =>
+const makeSelectMyAccount = () =>
   createSelector(
-    selectUserDetailsDomain,
+    selectMyAccountDomain,
     substate => substate,
   );
 
 const makeSelectUser = () =>
   createSelector(
-    selectUserDetailsDomain,
-    substate => substate._userBio,
+    selectMyAccountDomain,
+    substate => substate.data,
   );
 
-export default makeSelectUserDetails;
-export { selectUserDetailsDomain, makeSelectUser };
+export default makeSelectMyAccount;
+export { selectMyAccountDomain, makeSelectUser };

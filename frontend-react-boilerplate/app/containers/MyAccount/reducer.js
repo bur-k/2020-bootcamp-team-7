@@ -12,9 +12,6 @@ import {
   UPDATE_BIO,
   UPDATE_BIO_ERROR,
   UPDATE_BIO_SUCCESS,
-  GET_USER_WATCH_LIST,
-  GET_USER_WATCH_LIST_ERROR,
-  GET_USER_WATCH_LIST_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -42,14 +39,6 @@ const accountReducer = (state = initialState, action) =>
         draft.data = action.data;
         break;
       case UPDATE_BIO_ERROR:
-        break;
-      case GET_USER_WATCH_LIST:
-        draft.data = action.data;
-        break;
-      case GET_USER_WATCH_LIST_SUCCESS:
-        draft.data = action.data;
-        break;
-      case GET_USER_WATCH_LIST_ERROR:
         break;
     }
   });

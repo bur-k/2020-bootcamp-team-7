@@ -16,13 +16,13 @@ import { Button, Form, Image, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
-import makeSelectUserDetails, { makeSelectUser } from './selectors';
+import makeSelectMyAccount, { makeSelectUser } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { pullAccount, updateBio, getUserWatchList } from './actions';
+import { pullAccount, updateBio } from './actions';
 import './style.css';
 
-export function MyAccount({ onLoadUser, data, onChangeBio }) {
+export function MyAccount({ onLoadUser, user, onChangeBio }) {
   useInjectReducer({ key: 'myAccount', reducer });
   useInjectSaga({ key: 'myAccount', saga });
 
@@ -31,15 +31,15 @@ export function MyAccount({ onLoadUser, data, onChangeBio }) {
   }, []);
 
   const [_userBio, setUserBio] = useState({
-    bio: data.data == null ? '' : data.data.ubio,
+    bio: user === null ? '' : user.ubio,
     id: '',
   });
 
   const userData =
-    data.data == null ? null : (
+    user === null ? null : (
       <>
         <Helmet>
-          <title>My Account: {data.data.uname}</title>
+          <title>My Account</title>
           <meta name="description" content="Description of UserDetails" />
         </Helmet>
         <div className="profile-container">
@@ -47,7 +47,7 @@ export function MyAccount({ onLoadUser, data, onChangeBio }) {
             <div className="card-header" />
             <div className="container-center">
               <Image
-                src={`${data.data.uphoto}`}
+                src={`${user.uphoto}`}
                 className="img-custom profile-pic"
                 roundedCircle
               />
@@ -56,9 +56,7 @@ export function MyAccount({ onLoadUser, data, onChangeBio }) {
               <h3>{}</h3>
               <h4 />
               <p>
-                <Link to={`/user/${data.data.id}`}>
-                  Click to see Public Profile
-                </Link>
+                <Link to={`/user/${user.id}`}>Click to see Public Profile</Link>
               </p>
               <p>{}</p>
 
@@ -76,8 +74,8 @@ export function MyAccount({ onLoadUser, data, onChangeBio }) {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{data.data.uname}</td>
-                    <td>{data.data.uemail}</td>
+                    <td>{user.uname}</td>
+                    <td>{user.uemail}</td>
                     <td>{}</td>
                   </tr>
                 </tbody>
@@ -95,10 +93,10 @@ export function MyAccount({ onLoadUser, data, onChangeBio }) {
                     rows="3"
                     value={_userBio.bio}
                     onChange={e => {
+                      console.log(user);
                       setUserBio({
-                        ..._userBio.bio,
                         bio: e.target.value,
-                        id: data.data.id,
+                        id: user.id,
                       });
                     }}
                     required
@@ -122,15 +120,15 @@ export function MyAccount({ onLoadUser, data, onChangeBio }) {
 
 MyAccount.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  data: PropTypes.object,
   onLoadUser: PropTypes.func,
   onChangeBio: PropTypes.func,
-  _userBio: PropTypes.func,
+  myAccount: PropTypes.func,
+  user: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  data: makeSelectUserDetails(),
-  _userBio: makeSelectUser(),
+  myAccount: makeSelectMyAccount(),
+  user: makeSelectUser(),
 });
 
 function mapDispatchToProps(dispatch) {
