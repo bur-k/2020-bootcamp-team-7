@@ -144,6 +144,69 @@
   </Col>
 </Row>
 ```  
+![Image of a Review-1](https://i.imgur.com/NyBthqD.png)  
+![Image of a Review-2](https://i.imgur.com/m5AxUpZ.png)
+```
+<Accordion>
+  <Card className="bg-dark text-white">
+    <Card.Header>
+      <Accordion.Toggle as={NavLink} className="text-white" variant="link" eventKey="0" >
+        Leave a review
+      </Accordion.Toggle>
+    </Card.Header>
+    <Accordion.Collapse eventKey="0">
+      <Card.Body>
+        <Form onSubmit={e => {...} >
+          <Form.Group controlId="exampleForm.ControlInput1">
+            <Form.Label>Review Title</Form.Label>
+            <Form.Control type="input" placeholder="Title" value={_userReview.reviewTitle} onChange={e => {...} required />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Review</Form.Label>
+            <Form.Control as="textarea" rows="3" value={_userReview.review} onChange={...} required />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlSelect1">
+            <Form.Label>Rate Movie</Form.Label>
+            <Form.Control as="select" value={_userReview.score} onChange={...} >
+              <option>5</option>
+              <option>4</option>
+              <option>3</option>
+              <option>2</option>
+              <option>1</option>
+            </Form.Control>
+          </Form.Group>
+          <Button type="submit">Submit Review</Button>
+        </Form>
+      </Card.Body>
+    </Accordion.Collapse>
+  </Card>
+  <Card className="bg-dark text-white">
+    <Card.Header>
+      <Accordion.Toggle as={NavLink} className="text-white" variant="link" eventKey="1" >
+        View other users' reviews
+      </Accordion.Toggle>
+    </Card.Header>
+    <Accordion.Collapse eventKey="1">
+      <Card.Body>
+      {userReviews.map(rev => (
+          <>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Label>
+                <Link to={`/user/${rev.userId}`}>{rev.userName}</Link> :{' '}
+                {rev.reviewTitle}
+              </Form.Label>
+              <Form.Control as="textarea" rows="3" readOnly>
+                {rev.review}
+              </Form.Control>
+            </Form.Group>
+            <hr />
+          </>
+      )}
+      </Card.Body>
+    </Accordion.Collapse>
+  </Card>
+</Accordion>
+```  
 4. UserDetails
 > Details of selected user be shown, also users can follow other users on this page  
 5. MyAccount
