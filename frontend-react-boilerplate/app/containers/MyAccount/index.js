@@ -64,19 +64,33 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                 <thead>
                   <tr>
                     <th>
-                      <b>user name:</b>
+                      <b>user name</b>
                     </th>
                     <th>
-                      <b>user e-mail:</b>
+                      <b>e-mail</b>
                     </th>
-                    <th>FOLLOWERS</th>
+                    <th>
+                      <b>to watch list</b>
+                    </th>
+                    <th>
+                      <b>watched list</b>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>{user.uname}</td>
                     <td>{user.uemail}</td>
-                    <td>{}</td>
+                    <td>
+                    {user.movies.map(c => (
+                        <>
+                          <span>
+                            <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                          </span>
+                          <br />
+                        </>
+                      ))}
+                    </td>
                   </tr>
                 </tbody>
               </Table>
