@@ -58,8 +58,9 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
               <p>
                 <Link to={`/user/${user.id}`}>Click to see Public Profile</Link>
               </p>
-              <p>{}</p>
-
+              <hr></hr>
+              <p>{user.ubio}</p>
+              <hr></hr>
               <Table>
                 <thead>
                   <tr>
@@ -70,16 +71,10 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                       <b>e-mail</b>
                     </th>
                     <th>
-                      <b>to watch list</b>
+                      <b>following ({user.social.following.length})</b>
                     </th>
                     <th>
-                      <b>watched list</b>
-                    </th>
-                    <th>
-                      <b>following</b>
-                    </th>
-                    <th>
-                      <b>followers</b>
+                      <b>followers ({user.social.followers.length})</b>
                     </th>
                   </tr>
                 </thead>
@@ -87,26 +82,6 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                   <tr>
                     <td>{user.uname}</td>
                     <td>{user.uemail}</td>
-                    <td>
-                    {user.toWatchMovies.map(c => (
-                        <>
-                          <span>
-                            <Link to={`/movie/${c.id}`}>{c.title}</Link>
-                          </span>
-                          <br />
-                        </>
-                      ))}
-                    </td>
-                    <td>
-                    {user.watchedMovies.map(c => (
-                        <>
-                          <span>
-                            <Link to={`/movie/${c.id}`}>{c.title}</Link>
-                          </span>
-                          <br />
-                        </>
-                      ))}
-                    </td>
                     <td>
                     {user.social.following.map(c => (
                         <>
@@ -156,7 +131,71 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                 <Button type="submit">Update Bio</Button>
               </Form>
             </div>
-          </div>
+
+            <h3 style={{ marginLeft: '3%', marginBottom: '3%', fontSize: '30px', fontFamily: 'monospace' }}>to watch list({user.toWatchMovies.length})</h3>
+              <h4 />
+              <p>
+              </p>
+              <p></p>
+                    {user.toWatchMovies.map(c => (
+                        <>
+                        <Table>
+                <tbody>
+                  <tr>
+                    <td>
+                    <span>
+                            <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                          </span>
+                    </td>
+                    <td>
+                    <Link to={`/movie/${c.id}`} title={`${c.title}`}>
+                            <Image
+                              src={`https://image.tmdb.org/t/p/w500/${c.poster_path}`}
+                              className="img-custom"
+                          />  
+                          </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+                          
+                        </>
+                      ))}
+            <hr></hr>
+            <hr></hr>
+
+            <h3 style={{ marginLeft: '3%', marginBottom: '3%', fontSize: '30px', fontFamily: 'monospace' }}>watched list({user.watchedMovies.length})</h3>
+              <h4 />
+              <p>
+                
+              </p>
+              <p>{}</p>
+                    {user.watchedMovies.map(c => (
+                        <>
+                        <Table>
+                <tbody>
+                  <tr>
+                    <td>
+                    <span>
+                            <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                          </span>
+                    </td>
+                    <td>
+                    <Link to={`/movie/${c.id}`} title={`${c.title}`}>
+                            <Image
+                              src={`https://image.tmdb.org/t/p/w500/${c.poster_path}`}
+                              className="img-custom"
+                          />  
+                          </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+                          
+                        </>
+                      ))}
+                    
+            </div>
         </div>
       </>
     );
@@ -189,6 +228,7 @@ function mapDispatchToProps(dispatch) {
     },
     onChangeBio: _userBio => {
       dispatch(updateBio(_userBio));
+      alert('Bio has been successfully changed!')
     },
   };
 }
