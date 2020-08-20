@@ -12,18 +12,18 @@ import makeSelectUser from './selectors';
 function* getUserAccount() {
   try {
     const url1 = 'http://localhost:8080/api/users';
-    const options1 = {
+    const options = {
       method: 'GET',
     };
-    const response1 = yield call(request, url1, options1);
+    const response1 = yield call(request, url1, options);
 
     const url2 = `http://localhost:8080/api/movies/watchlist/${response1.id}`;
-    const options2 = {
-      method: 'GET',
-    };
+    const response2 = yield call(request, url2, options);
 
-    const response2 = yield call(request, url2, options2);
-    const responses = { ...response1, movies: response2 };
+    const url3 = `http://localhost:8080/api/movies/watchedlist/${response1.id}`;
+    const response3 = yield call(request, url3, options);
+
+    const responses = { ...response1, toWatchMovies: response2, watchedMovies: response3 };
 
     yield put(pullAccountSuccess(responses));
   } catch (error) {

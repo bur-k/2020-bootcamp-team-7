@@ -82,7 +82,17 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                     <td>{user.uname}</td>
                     <td>{user.uemail}</td>
                     <td>
-                    {user.movies.map(c => (
+                    {user.toWatchMovies.map(c => (
+                        <>
+                          <span>
+                            <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                          </span>
+                          <br />
+                        </>
+                      ))}
+                    </td>
+                    <td>
+                    {user.watchedMovies.map(c => (
                         <>
                           <span>
                             <Link to={`/movie/${c.id}`}>{c.title}</Link>
