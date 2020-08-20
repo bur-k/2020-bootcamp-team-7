@@ -4,7 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.backendspringboot.User.UserService;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/movies")
@@ -13,10 +18,26 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private UserService userService;
 
-    @GetMapping(value = "/watchlist", produces = "application/json")
-    public List<Movie> getWatchlist() {
-        return movieService.getWatchlist(List.of(475557, 385103, 587792));
+    @GetMapping(value = "/watchlist/{id}", produces = "application/json")
+    public List<Movie> getWatchlist(@PathVariable String id) {
+    	Set<Integer> set = userService.findUserByUserId(id).getWatchList();
+    	List<Integer> list = set.stream().collect(Collectors.toList());
+    	
+    	// inserts movies to database if not present
+    	Movie movie = null;
+    	for(int i=0; i < list.size(); i++) {
+    		int movieId = list.get(i);
+    		movie = movieService.findMovieByTmdbMovieId(movieId);
+    		if(movie == null) {
+    			String uri = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=c27a471ab79060886b0f3aadcf79bef8&language=en-US&append_to_response=credits";
+                movie = createMovie((new RestTemplate()).getForObject(uri, Movie.class));
+    		}
+    	}
+    	
+        return movieService.getWatchlist(list);
     }
 
     @GetMapping(value = "/{tmdbMovieId}", produces = "application/json")
