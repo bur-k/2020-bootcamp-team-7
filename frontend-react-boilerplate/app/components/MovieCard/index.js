@@ -7,11 +7,11 @@
 import React, { memo } from 'react';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
+import request from '../../utils/request';
 
 function MovieCard(props) {
   return (
@@ -33,8 +33,42 @@ function MovieCard(props) {
       </Card.Body>
       <Card.Footer>
         <ButtonGroup style={{ width: '100%' }}>
-          <Button variant="primary">Add to Watchlist</Button>
-          <Button variant="secondary">Mark as Watched</Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              const options = {
+                method: 'PUT',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+              };
+              request(
+                `http://localhost:8080/api/users/newToWatch/${props.movie.id}`,
+                options,
+              );
+            }}
+          >
+            Add to Watchlist
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              const options = {
+                method: 'PUT',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+              };
+              request(
+                `http://localhost:8080/api/users/newWatched/${props.movie.id}`,
+                options,
+              );
+            }}
+          >
+            Mark as Watched
+          </Button>
         </ButtonGroup>
       </Card.Footer>
     </Card>
