@@ -43,7 +43,7 @@
 </Card>
 ```  
 2. Discover
-> Listing page which lists movies so users can discover movies and/or add them into lists 
+> Listing page which lists movies so users can discover movies and/or add them into lists  
 ![Image of a MovieCard](https://i.imgur.com/FmTzeMV.png)
 ```
 <Card style={{ height: '100%' }}>
@@ -66,7 +66,84 @@
 </Card>
 ```  
 3. MovieDetails
-> This page includes information about selected movie and allows user to make review and view other user's reviews
+> This page includes information about selected movie and allows user to make review and view other user's reviews  
+![Image of a MovieDetails](https://i.imgur.com/bJIwOMb.png)
+```
+<Row>
+  <Col xs={12} lg={{ span: 8, offset: 2 }}>
+    <Image style={{ width: '100%' }} src={...} rounded />
+    <Card.ImgOverlay style={{ textAlign: 'right' }}>
+      <Badge variant="dark">
+        <a style={{ color: 'yellow' }} href={`https://www.imdb.com/title/${movie.imdb_id}`} target="_blank" rel="noopener noreferrer" >
+          IMDb
+        </a>
+      </Badge>
+    </Card.ImgOverlay>
+  </Col>
+</Row>
+<Row>
+  <Col xs={12} lg={{ span: 8, offset: 2 }}>
+    <Table striped bordered hover variant="dark">
+      <tbody>
+        <tr>
+          <td>Title</td>
+          <td>
+            {movie.title} ({new Date(movie.release_date).getFullYear()})
+          </td>
+        </tr>
+        <tr>
+          <td>Duration</td>
+          <td>
+            {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
+          </td>
+        </tr>
+        <tr>
+          <td>Genres</td>
+          <td>{movie.genres.map(g => g.name).join(', ')}</td>
+        </tr>
+        <tr>
+          <td style={{ whiteSpace: 'nowrap' }}>Overview</td>
+          <td>{movie.overview}</td>
+        </tr>
+        <tr>
+          <td>Tagline</td>
+          <td>{movie.tagline}</td>
+        </tr>
+        <tr>
+          <td>Cast</td>
+          <td>
+            <div className="overflow-auto" style={{ maxHeight: '250px' }} >
+              {movie.credits.cast.map(c => (
+                <>
+                  <span>
+                    <b>{c.name}</b> as <em>{c.character}</em>
+                  </span>
+                  <br />
+                </>
+              ))}
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Crew</td>
+          <td>
+            <div className="overflow-auto" style={{ maxHeight: '250px' }} >
+              {movie.credits.crew.map(c => (
+                <>
+                  <span>
+                    <b>{c.name}</b> as <em>{c.job}</em>
+                  </span>
+                  <br />
+                </>
+              ))}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </Table>
+  </Col>
+</Row>
+```  
 4. UserDetails
 > Details of selected user be shown, also users can follow other users on this page  
 5. MyAccount
