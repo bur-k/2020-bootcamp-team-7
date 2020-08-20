@@ -12,24 +12,15 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import {
-  Button,
-  Card,
-  Form,
-  Image,
-  Table
-} from 'react-bootstrap';
+import { Button, Form, Image, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
 
 import makeSelectUserDetails, { makeSelectUser } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { pullAccount, updateBio } from './actions';
 import './style.css';
-
-<script crossorigin src="..."></script>
 
 export function UserDetails({ onLoadUser, data, onChangeBio }) {
   useInjectReducer({ key: 'userDetails', reducer });
@@ -47,70 +38,78 @@ export function UserDetails({ onLoadUser, data, onChangeBio }) {
   const userData =
     data.data == null ? null : (
       <>
-      <Helmet>
-        <title>My Account: {data.data.uname}</title>
-        <meta name="description" content="Description of UserDetails" />
-      </Helmet>
-        <div classname="profile-container">
-    <div classname="card-container">
-        <div className="card-header">
-        </div>
-        <div className="container-center">
-        <Image src={`${data.data.uphoto}`} className="img-custom profile-pic" circle />
+        <Helmet>
+          <title>My Account: {data.data.uname}</title>
+          <meta name="description" content="Description of UserDetails" />
+        </Helmet>
+        <div className="profile-container">
+          <div className="card-container">
+            <div className="card-header" />
+            <div className="container-center">
+              <Image
+                src={`${data.data.uphoto}`}
+                className="img-custom profile-pic"
+                roundedCircle
+              />
+            </div>
+            <div className="card-body">
+              <h3>{}</h3>
+              <h4 />
+              <p>
+                <Link to={`/user/${data.data.id}`}>
+                  Click to see Public Profile
+                </Link>
+              </p>
+              <p>{}</p>
 
-        </div>
-        <div className="card-body">
-          <h3>{}</h3>
-          <h4>
-          
-          </h4>
-          <p><Link to={`/user/${data.data.id}`}>Click to see Public Profile</Link> </p>
-          <p>{}</p>
+              <Table>
+                <thead>
+                  <tr>
+                    <th>
+                      <b>user name:</b>
+                    </th>
+                    <th>
+                      <b>user e-mail:</b>
+                    </th>
+                    <th>FOLLOWERS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{data.data.uname}</td>
+                    <td>{data.data.uemail}</td>
+                    <td>{}</td>
+                  </tr>
+                </tbody>
+              </Table>
+              <Form
+                onSubmit={e => {
+                  e.preventDefault();
+                  onChangeBio(_userBio);
+                }}
+              >
+                <Form.Group>
+                  <Form.Label>BIO</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows="3"
+                    value={_userBio.bio}
+                    onChange={e => {
+                      setUserBio({
+                        ..._userBio.bio,
+                        bio: e.target.value,
+                        id: data.data.id,
+                      });
+                    }}
+                    required
+                  />
+                </Form.Group>
 
-          <Table>
-            <thead>
-              <tr>
-                <th><b>user name:</b> </th>
-                <th><b>user e-mail:</b> </th>
-                <th>FOLLOWERS</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{data.data.uname}</td>
-                <td>{data.data.uemail}</td>
-                <td>{}</td>
-              </tr>
-            </tbody>
-          </Table>
-          <Form
-              onSubmit={e => {
-                e.preventDefault();
-                onChangeBio(_userBio);
-              }}
-            >
-              <Form.Group>
-                <Form.Label>BIO</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows="3"
-                  value={_userBio.bio}
-                  onChange={e => {
-                    setUserBio({
-                      ..._userBio.bio,
-                      bio: e.target.value,
-                      id: data.data.id,
-                    });
-                  }}
-                  required
-                />
-              </Form.Group>
-
-              <Button type="submit">Update Bio</Button>
-            </Form>
+                <Button type="submit">Update Bio</Button>
+              </Form>
+            </div>
+          </div>
         </div>
-      </div>
-</div>
       </>
     );
 

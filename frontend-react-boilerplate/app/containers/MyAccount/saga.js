@@ -7,7 +7,7 @@ import {
   updateBioError,
   updateBioSuccess,
 } from './actions';
-import  makeSelectUser from './selectors';
+import makeSelectUser from './selectors';
 
 function* getUserAccount() {
   const url = 'http://localhost:8080/api/users';
@@ -30,10 +30,9 @@ function* updateUserAccountBio() {
   const body = {
     id: userId,
     ubio: userBio,
-  }
+  };
   const options = {
     method: 'PUT',
-    mode: 'CORS',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
