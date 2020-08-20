@@ -19,12 +19,12 @@ import { Helmet } from 'react-helmet';
 import makeSelectUserDetails, { makeSelectUser } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { pullAccount, updateBio } from './actions';
+import { pullAccount, updateBio, getUserWatchList } from './actions';
 import './style.css';
 
-export function UserDetails({ onLoadUser, data, onChangeBio }) {
-  useInjectReducer({ key: 'userDetails', reducer });
-  useInjectSaga({ key: 'userDetails', saga });
+export function MyAccount({ onLoadUser, data, onChangeBio }) {
+  useInjectReducer({ key: 'myAccount', reducer });
+  useInjectSaga({ key: 'myAccount', saga });
 
   useEffect(() => {
     onLoadUser();
@@ -120,7 +120,7 @@ export function UserDetails({ onLoadUser, data, onChangeBio }) {
   );
 }
 
-UserDetails.propTypes = {
+MyAccount.propTypes = {
   dispatch: PropTypes.func.isRequired,
   data: PropTypes.object,
   onLoadUser: PropTypes.func,
@@ -153,4 +153,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
-)(UserDetails);
+)(MyAccount);
