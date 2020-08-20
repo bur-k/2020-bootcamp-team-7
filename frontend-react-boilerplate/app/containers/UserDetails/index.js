@@ -15,11 +15,13 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useParams } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import makeSelectUserDetails, { makeSelectUserId } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { pullUser } from './actions';
+import request from '../../utils/request';
 
 export function UserDetails({ onPageLoadPullUser, userDetails }) {
   useInjectReducer({ key: 'userDetails', reducer });
@@ -41,6 +43,43 @@ export function UserDetails({ onPageLoadPullUser, userDetails }) {
         <span>{userDetails.user.uemail}</span>
         <br />
         <span>{userDetails.user.uphoto}</span>
+        <br />
+        <Button
+          onClick={() => {
+            const options = {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            };
+            request(
+              `http://localhost:8080/api/social/follow/${userDetails.user.id}`,
+              options,
+            );
+          }}
+        >
+          Follow
+        </Button>
+        <Button
+          onClick={() => {
+            const options = {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            };
+            request(
+              `http://localhost:8080/api/social/unfollow/${
+                userDetails.user.id
+              }`,
+              options,
+            );
+          }}
+        >
+          Unfollow
+        </Button>
       </>
     );
 

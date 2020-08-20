@@ -1,63 +1,60 @@
 package com.example.backendspringboot.Social;
 
-import java.util.Set;
+import org.springframework.data.annotation.Id;
 
+import java.util.Objects;
+import java.util.Set;
 
 public class Social {
 
-     
+    Set<SocialUser> followers;
+    Set<SocialUser> following;
+    @Id
+    String userId;
 
-    private Set<Social> followers;
-    private Set<Social> following;
-    private String name;
-    private String userId;
+    public Social() {
+    }
 
-    public Social(String name, String userId,Set<Social> followers,Set<Social> following) {
+    public Social(Set<SocialUser> followers, Set<SocialUser> following, String userId) {
         this.followers = followers;
         this.following = following;
-        this.name = name;
         this.userId = userId;
     }
-    public Social(String name, String userId){
-        this(name, userId, null, null);
 
+    public Set<SocialUser> getFollowers() {
+        return followers;
     }
 
-    public Set<Social> getFollowers() {
-        return this.followers;
-    }
-
-    public void setFollowers(Set<Social> followers) {
+    public void setFollowers(Set<SocialUser> followers) {
         this.followers = followers;
     }
 
-    public Set<Social> getFollowing() {
-        return this.following;
+    public Set<SocialUser> getFollowing() {
+        return following;
     }
 
-    public void setFollowing(Set<Social> following) {
+    public void setFollowing(Set<SocialUser> following) {
         this.following = following;
     }
 
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    
     public String getUserId() {
-        return this.userId;
+        return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Social social = (Social) o;
+        return userId.equals(social.userId);
+    }
 
-
-   
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
 }
