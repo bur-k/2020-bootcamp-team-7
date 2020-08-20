@@ -241,7 +241,7 @@
 }
 ```
 ### ReviewController
-#### POST http://localhost:8080/api/reviews/{tmdbMovieId} //@RequestHeader(value = "Authorization", @RequestBody UserReview)
+#### POST http://localhost:8080/api/reviews/{tmdbMovieId} //@RequestHeader(value = "Authorization"), @RequestBody UserReview
 ```
 {
    "tmdbMovieId":429617,
@@ -256,7 +256,7 @@
    ]
 }
 ```
-#### DELETE http://localhost:8080/api/reviews/{tmdbMovieId} //@RequestHeader(value = "Authorization"
+#### DELETE http://localhost:8080/api/reviews/{tmdbMovieId} //@RequestHeader(value = "Authorization")
 ```
 {
    "tmdbMovieId":429617,
@@ -273,7 +273,7 @@
    "userId":"T1wD6qvLncep19rKu391uzqHGrt2"
 }
 ```
-#### POST http://localhost:8080/api/social/follow/{userId} //@RequestHeader(value = "Authorization"
+#### POST http://localhost:8080/api/social/follow/{userId} //@RequestHeader(value = "Authorization")
 ```
 {
    "followers":[ ],
@@ -301,7 +301,7 @@
    "userId":"WdWXD1vFYKfNzoMnEbKLtvt4Ht03"
 }
 ```
-#### POST http://localhost:8080/api/social/unfollow/{userId} //@RequestHeader(value = "Authorization"
+#### POST http://localhost:8080/api/social/unfollow/{userId} //@RequestHeader(value = "Authorization")
 ```
 {
    "followers":[ ],
