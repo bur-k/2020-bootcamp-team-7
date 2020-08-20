@@ -1,14 +1,12 @@
-# 2020 Bootcamp Team 7 - `<team-name>`
+# 2020 Bootcamp Team 7 - `Three out of Six`
 
 ## Team Members
 
 | Role               | Name      |
 |--------------------|-----------|
-| Frontend Developer | John Doe  |
-| Backend Developer  | Jane Doe  |
+| Full-Stack Developer | Oğuz Mert Çaylar  |
+| Full-Stack Developer  | Burak Koç  |
+| Backend Developer - DevOps  | Berkay Emir  |
 
 ## Project
 
-.
-.
-.
