@@ -40,6 +40,25 @@ public class MovieController {
         return movieService.getWatchlist(list);
     }
 
+    @GetMapping(value = "/watchedlist/{id}", produces = "application/json")
+    public List<Movie> getWatchedlist(@PathVariable String id) {
+    	Set<Integer> set = userService.findUserByUserId(id).getWatchedList();
+    	List<Integer> list = set.stream().collect(Collectors.toList());
+    	
+    	// inserts movies to database if not present
+    	Movie movie = null;
+    	for(int i=0; i < list.size(); i++) {
+    		int movieId = list.get(i);
+    		movie = movieService.findMovieByTmdbMovieId(movieId);
+    		if(movie == null) {
+    			String uri = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=c27a471ab79060886b0f3aadcf79bef8&language=en-US&append_to_response=credits";
+                movie = createMovie((new RestTemplate()).getForObject(uri, Movie.class));
+    		}
+    	}
+    	
+        return movieService.getWatchedlist(list);
+    }
+    
     @GetMapping(value = "/{tmdbMovieId}", produces = "application/json")
     public Movie getMovie(@PathVariable Integer tmdbMovieId) {
         Movie movie = movieService.findMovieByTmdbMovieId(tmdbMovieId);

@@ -32,6 +32,8 @@ public class MovieService {
     List<Movie> getWatchlist(List<Integer> list) {
         return (List<Movie>) movieRepository.findAllById(list);
     }
-
+    List<Movie> getWatchedlist(List<Integer> list) {
+        return (List<Movie>) movieRepository.findAllById(list);
+    }
 
 }
