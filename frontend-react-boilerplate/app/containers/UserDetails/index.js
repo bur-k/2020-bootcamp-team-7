@@ -14,13 +14,14 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Image, Spinner, Table } from 'react-bootstrap';
+import { Button, Carousel, Image, Spinner, Table } from 'react-bootstrap';
 import makeSelectUserDetails, { makeSelectUserId } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { pullUser } from './actions';
 import request from '../../utils/request';
 import './style.css';
+import MovieCarousel from '../../components/MovieCarousel';
 
 export function UserDetails({ onPageLoadPullUser, userDetails }) {
   useInjectReducer({ key: 'userDetails', reducer });
@@ -170,83 +171,27 @@ export function UserDetails({ onPageLoadPullUser, userDetails }) {
 
             <h3
               style={{
-                marginLeft: '3%',
-                marginBottom: '3%',
+                textAlign: 'center',
+                marginTop: '3%',
                 fontSize: '30px',
                 fontFamily: 'monospace',
               }}
             >
               to watch list({userDetails.user.toWatchMovies.length})
             </h3>
-            <h4 />
-            <p />
-            <p />
-            {userDetails.user.toWatchMovies.map(c => (
-              <>
-                <Table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <span>
-                          <Link to={`/movie/${c.id}`}>{c.title}</Link>
-                        </span>
-                      </td>
-                      <td>
-                        <Link to={`/movie/${c.id}`} title={`${c.title}`}>
-                          <Image
-                            src={`https://image.tmdb.org/t/p/w500/${
-                              c.poster_path
-                            }`}
-                            className="img-custom1"
-                          />
-                        </Link>
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </>
-            ))}
-            <hr />
-            <hr />
+            <MovieCarousel movies={userDetails.user.toWatchMovies} />
 
             <h3
               style={{
-                marginLeft: '3%',
-                marginBottom: '3%',
+                textAlign: 'center',
+                marginTop: '3%',
                 fontSize: '30px',
                 fontFamily: 'monospace',
               }}
             >
               watched list({userDetails.user.watchedMovies.length})
             </h3>
-            <h4 />
-            <p />
-            <p>{}</p>
-            {userDetails.user.watchedMovies.map(c => (
-              <>
-                <Table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <span>
-                          <Link to={`/movie/${c.id}`}>{c.title}</Link>
-                        </span>
-                      </td>
-                      <td>
-                        <Link to={`/movie/${c.id}`} title={`${c.title}`}>
-                          <Image
-                            src={`https://image.tmdb.org/t/p/w500/${
-                              c.poster_path
-                            }`}
-                            className="img-custom1"
-                          />
-                        </Link>
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </>
-            ))}
+            <MovieCarousel movies={userDetails.user.watchedMovies} />
           </div>
         </div>
       </>
