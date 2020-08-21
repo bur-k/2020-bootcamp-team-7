@@ -23,8 +23,6 @@ public class SocialController {
     @GetMapping(value = "/{id}", produces = "application/json")
     public Social getSocial(@PathVariable String id) {
         Social social = socialService.findByUserId(id);
-        if (social == null)
-            return socialService.createSocial(id);
         return social;
     }
 
@@ -37,10 +35,6 @@ public class SocialController {
             return new Social();
         }
 
-        if (socialService.findByUserId(uid) == null)
-            socialService.createSocial(uid);
-        if (socialService.findByUserId(id) == null)
-            socialService.createSocial(id);
         User user1 = userService.findUserByUserId(uid);
         User user2 = userService.findUserByUserId(id);
         return socialService.follow(new SocialUser(user1.userId, user1.userDisplayName), new SocialUser(user2.userId, user2.userDisplayName));
@@ -55,8 +49,6 @@ public class SocialController {
             return new Social();
         }
 
-        if (socialService.findByUserId(uid) == null)
-            socialService.createSocial(uid);
         User user1 = userService.findUserByUserId(uid);
         User user2 = userService.findUserByUserId(id);
         return socialService.unfollow(new SocialUser(user1.userId, user1.userDisplayName), new SocialUser(user2.userId, user2.userDisplayName));

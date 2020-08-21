@@ -23,7 +23,7 @@ public class SocialService {
         return socialRepository.findByUserId(id);
     }
 
-    Social createSocial(String id) {
+    public Social createSocial(String id) {
         return socialRepository.insert(new Social(new HashSet<SocialUser>(), new HashSet<SocialUser>(), id));
     }
 

@@ -42,38 +42,38 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
           <title>My Account</title>
           <meta name="description" content="Description of UserDetails" />
         </Helmet>
-        <div className="profile-container">
-          <div className="card-container">
-            <div className="card-header" />
-            <div className="container-center">
+        <div className="profile-container1">
+          <div className="card-container1">
+            <div className="card-header1" />
+            <div className="container-center1">
               <Image
                 src={`${user.uphoto}`}
-                className="img-custom profile-pic"
+                className="img-custom1 profile-pic1"
                 roundedCircle
               />
             </div>
-            <div className="card-body">
-              <h3>{}</h3>
+            <div className="card-body1">
+              <h3 className="myH3">{}</h3>
               <h4 />
               <p>
                 <Link to={`/user/${user.id}`}>Click to see Public Profile</Link>
               </p>
-              <hr></hr>
+              <hr />
               <p>{user.ubio}</p>
-              <hr></hr>
-              <Table>
+              <hr />
+              <Table className="myTable">
                 <thead>
                   <tr>
-                    <th>
+                    <th className="myTh">
                       <b>user name</b>
                     </th>
-                    <th>
+                    <th className="myTh">
                       <b>e-mail</b>
                     </th>
-                    <th>
+                    <th className="myTh">
                       <b>following ({user.social.following.length})</b>
                     </th>
-                    <th>
+                    <th className="myTh">
                       <b>followers ({user.social.followers.length})</b>
                     </th>
                   </tr>
@@ -83,7 +83,7 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                     <td>{user.uname}</td>
                     <td>{user.uemail}</td>
                     <td>
-                    {user.social.following.map(c => (
+                      {user.social.following.map(c => (
                         <>
                           <span>
                             <Link to={`/user/${c.id}`}>{c.name}</Link>
@@ -93,7 +93,7 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                       ))}
                     </td>
                     <td>
-                    {user.social.followers.map(c => (
+                      {user.social.followers.map(c => (
                         <>
                           <span>
                             <Link to={`/user/${c.id}`}>{c.name}</Link>
@@ -112,13 +112,12 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                 }}
               >
                 <Form.Group>
-                  <Form.Label>BIO</Form.Label>
+                  <Form.Label>Bio</Form.Label>
                   <Form.Control
                     as="textarea"
                     rows="3"
                     value={_userBio.bio}
                     onChange={e => {
-                      console.log(user);
                       setUserBio({
                         bio: e.target.value,
                         id: user.id,
@@ -132,77 +131,93 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
               </Form>
             </div>
 
-            <h3 style={{ marginLeft: '3%', marginBottom: '3%', fontSize: '30px', fontFamily: 'monospace' }}>to watch list({user.toWatchMovies.length})</h3>
-              <h4 />
-              <p>
-              </p>
-              <p></p>
-                    {user.toWatchMovies.map(c => (
-                        <>
-                        <Table>
-                <tbody>
-                  <tr>
-                    <td>
-                    <span>
-                            <Link to={`/movie/${c.id}`}>{c.title}</Link>
-                          </span>
-                    </td>
-                    <td>
-                    <Link to={`/movie/${c.id}`} title={`${c.title}`}>
-                            <Image
-                              src={`https://image.tmdb.org/t/p/w500/${c.poster_path}`}
-                              className="img-custom"
-                          />  
-                          </Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-                          
-                        </>
-                      ))}
-            <hr></hr>
-            <hr></hr>
+            <h3
+              style={{
+                marginLeft: '3%',
+                marginBottom: '3%',
+                fontSize: '30px',
+                fontFamily: 'monospace',
+              }}
+            >
+              to watch list({user.toWatchMovies.length})
+            </h3>
+            <h4 />
+            <p />
+            <p />
+            {user.toWatchMovies.map(c => (
+              <>
+                <Table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <span>
+                          <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                        </span>
+                      </td>
+                      <td>
+                        <Link to={`/movie/${c.id}`} title={`${c.title}`}>
+                          <Image
+                            src={`https://image.tmdb.org/t/p/w500/${
+                              c.poster_path
+                            }`}
+                            className="img-custom1"
+                          />
+                        </Link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </>
+            ))}
+            <hr />
+            <hr />
 
-            <h3 style={{ marginLeft: '3%', marginBottom: '3%', fontSize: '30px', fontFamily: 'monospace' }}>watched list({user.watchedMovies.length})</h3>
-              <h4 />
-              <p>
-                
-              </p>
-              <p>{}</p>
-                    {user.watchedMovies.map(c => (
-                        <>
-                        <Table>
-                <tbody>
-                  <tr>
-                    <td>
-                    <span>
-                            <Link to={`/movie/${c.id}`}>{c.title}</Link>
-                          </span>
-                    </td>
-                    <td>
-                    <Link to={`/movie/${c.id}`} title={`${c.title}`}>
-                            <Image
-                              src={`https://image.tmdb.org/t/p/w500/${c.poster_path}`}
-                              className="img-custom"
-                          />  
-                          </Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-                          
-                        </>
-                      ))}
-                    
-            </div>
+            <h3
+              style={{
+                marginLeft: '3%',
+                marginBottom: '3%',
+                fontSize: '30px',
+                fontFamily: 'monospace',
+              }}
+            >
+              watched list({user.watchedMovies.length})
+            </h3>
+            <h4 />
+            <p />
+            <p>{}</p>
+            {user.watchedMovies.map(c => (
+              <>
+                <Table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <span>
+                          <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                        </span>
+                      </td>
+                      <td>
+                        <Link to={`/movie/${c.id}`} title={`${c.title}`}>
+                          <Image
+                            src={`https://image.tmdb.org/t/p/w500/${
+                              c.poster_path
+                            }`}
+                            className="img-custom1"
+                          />
+                        </Link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </>
+            ))}
+          </div>
         </div>
       </>
     );
 
   return (
     <div style={{ height: '100%' }}>
-      <div className="container-center">{userData}</div>
+      <div className="container-center1">{userData}</div>
     </div>
   );
 }
@@ -211,8 +226,8 @@ MyAccount.propTypes = {
   dispatch: PropTypes.func.isRequired,
   onLoadUser: PropTypes.func,
   onChangeBio: PropTypes.func,
-  myAccount: PropTypes.func,
-  user: PropTypes.func,
+  myAccount: PropTypes.object,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -228,7 +243,7 @@ function mapDispatchToProps(dispatch) {
     },
     onChangeBio: _userBio => {
       dispatch(updateBio(_userBio));
-      alert('Bio has been successfully changed!')
+      alert('Bio has been successfully changed!');
     },
   };
 }
