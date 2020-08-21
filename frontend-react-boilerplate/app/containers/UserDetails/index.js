@@ -30,9 +30,8 @@ export function UserDetails({ onPageLoadPullUser, userDetails }) {
 
   useEffect(() => {
     onPageLoadPullUser(id);
-  }, []);
+  }, [id]);
 
-  console.log();
   const user =
     userDetails.user === null ? null : (
       <>

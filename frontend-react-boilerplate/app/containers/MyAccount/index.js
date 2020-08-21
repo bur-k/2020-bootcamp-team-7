@@ -243,7 +243,6 @@ function mapDispatchToProps(dispatch) {
     },
     onChangeBio: _userBio => {
       dispatch(updateBio(_userBio));
-      alert('Bio has been successfully changed!');
     },
   };
 }

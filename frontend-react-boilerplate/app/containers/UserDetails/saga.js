@@ -11,8 +11,9 @@ export default function* userDetailsSaga() {
 }
 
 function* getUserDetails() {
+  const _id = yield select(makeSelectUserId());
   try {
-    const url1 = 'http://localhost:8080/api/users';
+    const url1 = `http://localhost:8080/api/users/${_id}`;
     const options = {
       method: 'GET',
     };
