@@ -145,8 +145,7 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
             </div>
             <h3
               style={{
-                marginLeft: '3%',
-                marginBottom: '3%',
+                marginTop: '3%',
                 fontSize: '30px',
                 fontFamily: 'monospace',
               }}
@@ -156,8 +155,7 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
             <MovieCarousel movies={user.toWatchMovies} />
             <h3
               style={{
-                marginLeft: '3%',
-                marginBottom: '3%',
+                marginTop: '3%',
                 fontSize: '30px',
                 fontFamily: 'monospace',
               }}
