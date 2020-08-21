@@ -210,6 +210,378 @@
 </Accordion>
 ```  
 ### 4. UserDetails
-#### Details of selected user be shown, also users can follow other users on this page  
+#### Details of selected user be shown, users may view their 'watched list' and 'to watch' list with navigation feature to movies and also users can follow other users on this page
+![Image of a UserDetails](https://i.imgur.com/pnnchPk.jpg)
+```
+<div className="profile-container1">
+  <div className="card-container1">
+    <div className="card-header1" />
+    <div className="container-center1">
+      <Image
+        src={`${userDetails.user.uphoto}`}
+        className="img-custom1 profile-pic1"
+        roundedCircle
+      />
+      <div className="card-body1">
+        <h3 className="myH3">{}</h3>
+        <h4 />
+        <p />
+        <hr />
+        <p>{userDetails.user.ubio}</p>
+        <hr />
+        <Table className="myTable">
+          <thead>
+            <tr>
+              <th className="myTh">
+                <b>user name</b>
+              </th>
+              <th className="myTh">
+                <b>e-mail</b>
+              </th>
+              <th className="myTh">
+                <b>
+                  following ({userDetails.user.social.following.length})
+                </b>
+              </th>
+              <th className="myTh">
+                <b>
+                  followers ({userDetails.user.social.followers.length})
+                </b>
+              </th>
+              <th className="myTh">
+                <Button
+                  onClick={() => {
+                    const options = {
+                      method: 'POST',
+                      headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                      },
+                    };
+                    request(
+                      `http://localhost:8080/api/social/follow/${
+                        userDetails.user.id
+                      }`,
+                      options,
+                    );
+                    setNeedsToBeUpdated(!needsToBeUpdated);
+                  }}
+                >
+                  Follow
+                </Button>
+              </th>
+              <th className="myTh">
+                <Button
+                  onClick={() => {
+                    const options = {
+                      method: 'POST',
+                      headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                      },
+                    };
+                    request(
+                      `http://localhost:8080/api/social/unfollow/${
+                        userDetails.user.id
+                      }`,
+                      options,
+                    );
+                    setNeedsToBeUpdated(!needsToBeUpdated);
+                  }}
+                >
+                  Unfollow
+                </Button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{userDetails.user.uname}</td>
+              <td>{userDetails.user.uemail}</td>
+              <td>
+                {userDetails.user.social.following.map(c => (
+                  <>
+                    <span>
+                      <Link to={`/user/${c.id}`}>{c.name}</Link>
+                    </span>
+                    <br />
+                  </>
+                ))}
+              </td>
+              <td>
+                {userDetails.user.social.followers.map(c => (
+                  <>
+                    <span>
+                      <Link to={`/user/${c.id}`}>{c.name}</Link>
+                    </span>
+                    <br />
+                  </>
+                ))}
+              </td>
+              <td />
+              <td />
+            </tr>
+          </tbody>
+        </Table>
+      </div>
+    </div>
+
+    <h3
+      style={{
+        marginLeft: '3%',
+        marginBottom: '3%',
+        fontSize: '30px',
+        fontFamily: 'monospace',
+      }}
+    >
+      to watch list({userDetails.user.toWatchMovies.length})
+    </h3>
+    <h4 />
+    <p />
+    <p />
+    {userDetails.user.toWatchMovies.map(c => (
+      <>
+        <Table>
+          <tbody>
+            <tr>
+              <td>
+                <span>
+                  <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                </span>
+              </td>
+              <td>
+                <Link to={`/movie/${c.id}`} title={`${c.title}`}>
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500/${
+                      c.poster_path
+                    }`}
+                    className="img-custom1"
+                  />
+                </Link>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </>
+    ))}
+    <hr />
+    <hr />
+
+    <h3
+      style={{
+        marginLeft: '3%',
+        marginBottom: '3%',
+        fontSize: '30px',
+        fontFamily: 'monospace',
+      }}
+    >
+      watched list({userDetails.user.watchedMovies.length})
+    </h3>
+    <h4 />
+    <p />
+    <p>{}</p>
+    {userDetails.user.watchedMovies.map(c => (
+      <>
+        <Table>
+          <tbody>
+            <tr>
+              <td>
+                <span>
+                  <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                </span>
+              </td>
+              <td>
+                <Link to={`/movie/${c.id}`} title={`${c.title}`}>
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500/${
+                      c.poster_path
+                    }`}
+                    className="img-custom1"
+                  />
+                </Link>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </>
+    ))}
+  </div>
+</div>
+```
 ### 5. MyAccount
-#### Users can customize their account using this page
+#### Scope is the same as UserDetails with addition to users may update their bio on this page and are able to navigate to their public profile view
+![Image of a MyAccount-1](https://i.imgur.com/1ZELOJD.jpg)
+![Image of a MyAccount-2](https://i.imgur.com/as2HwI0.jpg)
+```
+<div className="profile-container1">
+  <div className="card-container1">
+    <div className="card-header1" />
+    <div className="container-center1">
+      <Image
+        src={`${user.uphoto}`}
+        className="img-custom1 profile-pic1"
+        roundedCircle
+      />
+    </div>
+    <div className="card-body1">
+      <h3 className="myH3">{}</h3>
+      <h4 />
+      <p>
+        <Link to={`/user/${user.id}`}>Click to see Public Profile</Link>
+      </p>
+      <hr />
+      <p>{user.ubio}</p>
+      <hr />
+      <Table className="myTable">
+        <thead>
+          <tr>
+            <th className="myTh">
+              <b>user name</b>
+            </th>
+            <th className="myTh">
+              <b>e-mail</b>
+            </th>
+            <th className="myTh">
+              <b>following ({user.social.following.length})</b>
+            </th>
+            <th className="myTh">
+              <b>followers ({user.social.followers.length})</b>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{user.uname}</td>
+            <td>{user.uemail}</td>
+            <td>
+              {user.social.following.map(c => (
+                <>
+                  <span>
+                    <Link to={`/user/${c.id}`}>{c.name}</Link>
+                  </span>
+                  <br />
+                </>
+              ))}
+            </td>
+            <td>
+              {user.social.followers.map(c => (
+                <>
+                  <span>
+                    <Link to={`/user/${c.id}`}>{c.name}</Link>
+                  </span>
+                  <br />
+                </>
+              ))}
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+      <Form
+        onSubmit={e => {
+          e.preventDefault();
+          onChangeBio(_userBio);
+        }}
+      >
+        <Form.Group>
+          <Form.Label>Bio</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows="3"
+            value={_userBio.bio}
+            onChange={e => {
+              setUserBio({
+                bio: e.target.value,
+                id: user.id,
+              });
+            }}
+            required
+          />
+        </Form.Group>
+
+        <Button type="submit">Update Bio</Button>
+      </Form>
+    </div>
+
+    <h3
+      style={{
+        marginLeft: '3%',
+        marginBottom: '3%',
+        fontSize: '30px',
+        fontFamily: 'monospace',
+      }}
+    >
+      to watch list({user.toWatchMovies.length})
+    </h3>
+    <h4 />
+    <p />
+    <p />
+    {user.toWatchMovies.map(c => (
+      <>
+        <Table>
+          <tbody>
+            <tr>
+              <td>
+                <span>
+                  <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                </span>
+              </td>
+              <td>
+                <Link to={`/movie/${c.id}`} title={`${c.title}`}>
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500/${
+                      c.poster_path
+                    }`}
+                    className="img-custom1"
+                  />
+                </Link>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </>
+    ))}
+    <hr />
+    <hr />
+
+    <h3
+      style={{
+        marginLeft: '3%',
+        marginBottom: '3%',
+        fontSize: '30px',
+        fontFamily: 'monospace',
+      }}
+    >
+      watched list({user.watchedMovies.length})
+    </h3>
+    <h4 />
+    <p />
+    <p>{}</p>
+    {user.watchedMovies.map(c => (
+      <>
+        <Table>
+          <tbody>
+            <tr>
+              <td>
+                <span>
+                  <Link to={`/movie/${c.id}`}>{c.title}</Link>
+                </span>
+              </td>
+              <td>
+                <Link to={`/movie/${c.id}`} title={`${c.title}`}>
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500/${
+                      c.poster_path
+                    }`}
+                    className="img-custom1"
+                  />
+                </Link>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </>
+    ))}
+  </div>
+</div>
+```
+
