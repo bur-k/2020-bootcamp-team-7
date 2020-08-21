@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -28,9 +28,12 @@ export function UserDetails({ onPageLoadPullUser, userDetails }) {
 
   const { id } = useParams();
 
+  const [needsToBeUpdated, setNeedsToBeUpdated] = useState(false);
   useEffect(() => {
     onPageLoadPullUser(id);
-  }, [id]);
+  }, [needsToBeUpdated]);
+
+  useEffect(() => {}, [id]);
 
   const user =
     userDetails.user === null ? null : (
@@ -91,6 +94,7 @@ export function UserDetails({ onPageLoadPullUser, userDetails }) {
                               }`,
                               options,
                             );
+                            setNeedsToBeUpdated(!needsToBeUpdated);
                           }}
                         >
                           Follow
@@ -112,6 +116,7 @@ export function UserDetails({ onPageLoadPullUser, userDetails }) {
                               }`,
                               options,
                             );
+                            setNeedsToBeUpdated(!needsToBeUpdated);
                           }}
                         >
                           Unfollow
