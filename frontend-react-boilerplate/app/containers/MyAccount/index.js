@@ -31,7 +31,7 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
   }, []);
 
   const [_userBio, setUserBio] = useState({
-    bio: user === null ? '' : user.ubio,
+    bio: user === null ? '' : user.user.ubio,
     id: '',
   });
 
@@ -57,7 +57,7 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
             <div className="card-header1" />
             <div className="container-center1">
               <Image
-                src={`${user.uphoto}`}
+                src={`${user.user.uphoto}`}
                 className="img-custom1 profile-pic1"
                 roundedCircle
               />
@@ -66,10 +66,12 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
               <h3 className="myH3">{}</h3>
               <h4 />
               <p>
-                <Link to={`/user/${user.id}`}>Click to see Public Profile</Link>
+                <Link to={`/user/${user.user.id}`}>
+                  Click to see Public Profile
+                </Link>
               </p>
               <hr />
-              <p>{user.ubio}</p>
+              <p>{user.user.ubio}</p>
               <hr />
               <Table className="myTable">
                 <thead>
@@ -90,8 +92,8 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{user.uname}</td>
-                    <td>{user.uemail}</td>
+                    <td>{user.user.uname}</td>
+                    <td>{user.user.uemail}</td>
                     <td>
                       {user.social.following.map(c => (
                         <>
@@ -130,7 +132,7 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
                     onChange={e => {
                       setUserBio({
                         bio: e.target.value,
-                        id: user.id,
+                        id: user.user.id,
                       });
                     }}
                     required

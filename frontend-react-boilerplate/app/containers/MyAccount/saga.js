@@ -27,7 +27,7 @@ function* getUserAccount() {
     const response4 = yield call(request, url4, options);
 
     const responses = {
-      ...response1,
+      user: response1,
       toWatchMovies: response2,
       watchedMovies: response3,
       social: response4,
@@ -41,7 +41,7 @@ function* getUserAccount() {
 
 function* updateUserAccountBio() {
   const user = yield select(makeSelectUser());
-  const url = `http://localhost:8080/api/users/${user.data.id}`;
+  const url = `http://localhost:8080/api/users/${user.data.user.id}`;
 
   const options = {
     method: 'PUT',
@@ -49,12 +49,12 @@ function* updateUserAccountBio() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: user.data.bio,
+    body: user.data.user.bio,
   };
 
   try {
     const bio = yield call(request, url, options);
-    yield put(updateBioSuccess({ ...currData, ...bio }));
+    yield put(updateBioSuccess(bio));
   } catch (error) {
     yield put(updateBioError(error));
   }

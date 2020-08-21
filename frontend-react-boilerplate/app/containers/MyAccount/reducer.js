@@ -33,10 +33,10 @@ const accountReducer = (state = initialState, action) =>
       case PULL_ACCOUNT_ERROR:
         break;
       case UPDATE_BIO:
-        draft.data = action.data;
+        draft.data = { ...draft.data, user: action.data };
         break;
       case UPDATE_BIO_SUCCESS:
-        draft.data = action.data;
+        draft.data = { ...draft.data, user: action.data };
         break;
       case UPDATE_BIO_ERROR:
         break;

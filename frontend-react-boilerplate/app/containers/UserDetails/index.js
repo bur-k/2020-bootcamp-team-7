@@ -33,7 +33,9 @@ export function UserDetails({ onPageLoadPullUser, userDetails }) {
     onPageLoadPullUser(id);
   }, [needsToBeUpdated]);
 
-  useEffect(() => {}, [id]);
+  useEffect(() => {
+    onPageLoadPullUser(id);
+  }, [id]);
 
   const user =
     userDetails.user === null ? (
