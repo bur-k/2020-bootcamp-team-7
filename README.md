@@ -6,7 +6,7 @@
 |--------------------|-----------|
 | Full-Stack Developer | Oğuz Mert Çaylar  |
 | Full-Stack Developer  | Burak Koç  |
-| Backend Developer - DevOps  | Berkay Emir  |
+| Backend Developer | Berkay Emir  |
 
 ## Quick Start 
 
