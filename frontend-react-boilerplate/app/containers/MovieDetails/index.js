@@ -24,6 +24,7 @@ import {
   Image,
   NavLink,
   Row,
+  Spinner,
   Table,
 } from 'react-bootstrap';
 import makeSelectMovieDetails, {
@@ -79,7 +80,17 @@ export function MovieDetails({
           </>
       ));
   const _movie =
-    movie === null ? null : (
+    movie === null ? (
+      <div className="profile-container1">
+        <div className="card-container1">
+          <div className="container-center1">
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </div>
+        </div>
+      </div>
+    ) : (
       <>
         <Row>
           <Col xs={12} lg={{ span: 8, offset: 2 }}>

@@ -14,7 +14,7 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Image, Table } from 'react-bootstrap';
+import { Button, Image, Spinner, Table } from 'react-bootstrap';
 import makeSelectUserDetails, { makeSelectUserId } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -36,7 +36,17 @@ export function UserDetails({ onPageLoadPullUser, userDetails }) {
   useEffect(() => {}, [id]);
 
   const user =
-    userDetails.user === null ? null : (
+    userDetails.user === null ? (
+      <div className="profile-container1">
+        <div className="card-container1">
+          <div className="container-center1">
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </div>
+        </div>
+      </div>
+    ) : (
       <>
         <Helmet>
           <title>Public Account</title>

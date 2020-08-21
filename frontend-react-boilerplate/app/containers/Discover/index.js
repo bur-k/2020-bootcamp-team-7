@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Spinner } from 'react-bootstrap';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -70,7 +70,15 @@ export function Discover({ movies, page, onLoadDiscover }) {
           hasMore
           loader={
             <div className="loader" key={0}>
-              Loading ...
+              <div className="profile-container1">
+                <div className="card-container1">
+                  <div className="container-center1">
+                    <Spinner animation="border" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </Spinner>
+                  </div>
+                </div>
+              </div>
             </div>
           }
         >

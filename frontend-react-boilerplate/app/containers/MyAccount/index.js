@@ -12,7 +12,7 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import { Button, Form, Image, Table } from 'react-bootstrap';
+import { Button, Form, Image, Spinner, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
@@ -36,7 +36,17 @@ export function MyAccount({ onLoadUser, user, onChangeBio }) {
   });
 
   const userData =
-    user === null ? null : (
+    user === null ? (
+      <div className="profile-container1">
+        <div className="card-container1">
+          <div className="container-center1">
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </div>
+        </div>
+      </div>
+    ) : (
       <>
         <Helmet>
           <title>My Account</title>
