@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import Card from 'react-bootstrap/Card';
@@ -14,6 +14,9 @@ import Button from 'react-bootstrap/Button';
 import request from '../../utils/request';
 
 function MovieCard(props) {
+  const [isShowButtonToWatch, setIsShowButtonToWatch] = useState(false);
+  const [isShowButtonWatched, setIsShowButtonWatched] = useState(false);
+
   return (
     <Card style={{ height: '100%' }}>
       <Card.Img
@@ -35,6 +38,7 @@ function MovieCard(props) {
         <ButtonGroup style={{ width: '100%' }}>
           <Button
             variant="primary"
+            disabled={isShowButtonToWatch}
             onClick={() => {
               const options = {
                 method: 'PUT',
@@ -47,12 +51,14 @@ function MovieCard(props) {
                 `http://localhost:8080/api/users/newToWatch/${props.movie.id}`,
                 options,
               );
+              setIsShowButtonToWatch(true);
             }}
           >
             Add to Watchlist
           </Button>
           <Button
             variant="secondary"
+            disabled={isShowButtonWatched}
             onClick={() => {
               const options = {
                 method: 'PUT',
@@ -65,6 +71,7 @@ function MovieCard(props) {
                 `http://localhost:8080/api/users/newWatched/${props.movie.id}`,
                 options,
               );
+              setIsShowButtonWatched(true);
             }}
           >
             Mark as Watched
