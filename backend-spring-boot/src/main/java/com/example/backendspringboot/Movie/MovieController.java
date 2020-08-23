@@ -20,6 +20,8 @@ public class MovieController {
 
     @Autowired
     private UserService userService;
+    
+    private String apiKey = ""; // https://www.themoviedb.org/settings/api
 
     @GetMapping(value = "/watchlist/{id}", produces = "application/json")
     public List<Movie> getWatchlist(@PathVariable String id) {
@@ -32,7 +34,7 @@ public class MovieController {
     		int movieId = list.get(i);
     		movie = movieService.findMovieByTmdbMovieId(movieId);
     		if(movie == null) {
-    			String uri = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=c27a471ab79060886b0f3aadcf79bef8&language=en-US&append_to_response=credits";
+    			String uri = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key="+apiKey+"&language=en-US&append_to_response=credits";
                 movie = createMovie((new RestTemplate()).getForObject(uri, Movie.class));
     		}
     	}
@@ -51,7 +53,7 @@ public class MovieController {
     		int movieId = list.get(i);
     		movie = movieService.findMovieByTmdbMovieId(movieId);
     		if(movie == null) {
-    			String uri = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=c27a471ab79060886b0f3aadcf79bef8&language=en-US&append_to_response=credits";
+    			String uri = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key="+apiKey+"&language=en-US&append_to_response=credits";
                 movie = createMovie((new RestTemplate()).getForObject(uri, Movie.class));
     		}
     	}
@@ -63,7 +65,7 @@ public class MovieController {
     public Movie getMovie(@PathVariable Integer tmdbMovieId) {
         Movie movie = movieService.findMovieByTmdbMovieId(tmdbMovieId);
         if (movie == null) {
-            String uri = "https://api.themoviedb.org/3/movie/" + tmdbMovieId + "?api_key=c27a471ab79060886b0f3aadcf79bef8&language=en-US&append_to_response=credits";
+            String uri = "https://api.themoviedb.org/3/movie/" + tmdbMovieId + "?api_key="+apiKey+"&language=en-US&append_to_response=credits";
             movie = createMovie((new RestTemplate()).getForObject(uri, Movie.class));
         }
         return movie;
@@ -71,7 +73,7 @@ public class MovieController {
 
     @GetMapping(value = {"/discover", "/discover/{page}"}, produces = "application/json")
     public Object getDiscover(@PathVariable(required = false) Integer page) {
-        final String uri = "https://api.themoviedb.org/3/movie/popular?api_key=c27a471ab79060886b0f3aadcf79bef8&language=en-US&page=" + (page == null ? 1 : page);
+        final String uri = "https://api.themoviedb.org/3/movie/popular?api_key="+apiKey+"&language=en-US&page=" + (page == null ? 1 : page);
         return (new RestTemplate()).getForObject(uri, Object.class);
     }
 
